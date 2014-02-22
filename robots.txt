@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: 
+
+Sitemap: http://teyrow.github.io//github/sitemap.xml 

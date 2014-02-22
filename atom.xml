@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[AGA-trion]]></title>
-  <link href="http://teyrow.github.io//github/atom.xml" rel="self"/>
-  <link href="http://teyrow.github.io//github/"/>
-  <updated>2014-02-22T10:15:38+01:00</updated>
-  <id>http://teyrow.github.io//github/</id>
+  <link href="http://www.teyrow.com/agatrion//atom.xml" rel="self"/>
+  <link href="http://www.teyrow.com/agatrion//"/>
+  <updated>2014-02-22T11:11:57+01:00</updated>
+  <id>http://www.teyrow.com/agatrion//</id>
   <author>
     <name><![CDATA[Andreas Josephson]]></name>
     

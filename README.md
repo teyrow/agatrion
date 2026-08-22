@@ -69,6 +69,66 @@ python3 verktyg/klipp-konsert.py
 Spårlistorna står i början av skriptet — lägg till konserten där och kör.
 Kräver `lame` (`brew install lame`) och `numpy` (`pip3 install numpy`).
 
+## Mediafiler på objektlagring
+
+Ljud och video ligger inte i git. De är stora, ändras aldrig och skulle annars tränga
+undan GitHub Pages gräns på 1 GB. I stället bor de i en S3-bucket hos GleSYS och
+sajten länkar dit. Filerna finns kvar lokalt under `media/ljud` och `media/video`,
+men är gitignorerade.
+
+### Engångsuppsättning
+
+1. Skapa en bucket i GleSYS kontrollpanel. **Döp den exakt till `media.agatrion.se`** —
+   då fungerar ett eget domännamn via CNAME.
+2. Skapa en API-nyckel till objektlagringen och lägg den i `~/.s3cfg`:
+
+   ```
+   [default]
+   access_key = DIN_NYCKEL
+   secret_key = DIN_HEMLIGHET
+   host_base = objects.dc-sto1.glesys.net
+   host_bucket = %(bucket)s.objects.dc-sto1.glesys.net
+   use_https = True
+   ```
+
+   Ligger bucketen i Falkenberg heter värden `objects.dc-fbg1.glesys.net` i stället.
+   Nycklarna ska aldrig checkas in.
+3. Lägg en CNAME i DNS: `media` → `media.agatrion.se.objects.dc-sto1.glesys.net.`
+   Kontrollera med GleSYS support att de terminerar HTTPS för eget domännamn. Gör de
+   inte det får sajten peka direkt på bucket-adressen i stället — samma sak fungerar,
+   men adressen blir längre.
+4. Ladda upp allt och peka om sajten:
+
+   ```
+   ./verktyg/publicera-media.sh --test     # visa vad som skulle hända
+   ./verktyg/publicera-media.sh            # ladda upp
+   python3 verktyg/satt-mediabas.py https://media.agatrion.se
+   ```
+
+   Först därefter tas mediafilerna ur git:
+
+   ```
+   printf 'media/ljud/\nmedia/video/\n' >> .gitignore
+   git rm -r --cached media/ljud media/video
+   ```
+
+### Löpande
+
+Nya inspelningar läggs i `media/ljud/<konsert>/` som vanligt, sedan:
+
+```
+./verktyg/publicera-media.sh
+```
+
+Filerna får `Cache-Control: immutable` med ett års livslängd. **Byter du innehåll i en
+fil måste den därför byta namn**, annars fortsätter besökare att höra den gamla.
+
+Vill du tillfälligt köra allt lokalt igen — till exempel för att testa utan nät:
+
+```
+python3 verktyg/satt-mediabas.py --lokalt
+```
+
 ## Video
 
 Videor bäddas in från YouTube, men först när besökaren klickar på uppspelningsknappen —

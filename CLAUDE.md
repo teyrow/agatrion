@@ -43,11 +43,19 @@ wav-filer. Källmaterialet ligger utanför repot i `/Users/aj/code/music-convert
 samma gain, decimerar 96 → 48 kHz, konverterar till 16 bitar och kodar via `lame -V 3`.
 Spårlistorna står i `CONCERTS` överst i skriptet.
 
-Två saker att veta:
+`media/ljud` och `media/video` ligger **inte i git** utan i en S3-bucket hos GleSYS
+(`media.agatrion.se`). Filerna finns kvar lokalt och synkas upp med
+`verktyg/publicera-media.sh`; `verktyg/satt-mediabas.py` växlar sajtens länkar mellan
+bucketen och lokala filer. Bilder ligger kvar i repot — de är små och Open Graph-taggarna
+kräver samma domän som sidan. Se README för uppsättningen.
+
+Tre saker att veta:
 - **ffmpeg på den här maskinen är trasigt** (`/usr/local/bin/ffmpeg` saknar `libjxl.0.11`).
   Därför använder skriptet Python + `lame`, och `afconvert` för m4a-källor.
 - **Använd aldrig Git LFS för media.** GitHub Pages serverar LFS-pekarfiler i stället för
   innehållet, så ljudet skulle sluta fungera. Filerna ska ligga som vanliga binärer.
+
+Filerna cachas med `immutable` i ett år, så **en ändrad inspelning måste byta filnamn**.
 
 `<audio>`-element måste ha `preload="none"`, annars laddar `lyssna.html` ner hundratals
 megabyte vid varje besök.

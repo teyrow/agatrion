@@ -15,7 +15,7 @@
 set -euo pipefail
 
 BUCKET="${AGATRION_BUCKET:-agatrion-media}"
-DC="${AGATRION_DC:-dc-sto1}"
+DC="${AGATRION_DC:-dc-fbg1}"
 ROT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MAPPAR=(ljud video)
 

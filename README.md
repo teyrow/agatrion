@@ -79,7 +79,7 @@ men är gitignorerade.
 ### Engångsuppsättning
 
 **1. Skapa en instans.** I GleSYS kontrollpanel: **Storage → Object storage → Create**.
-Välj datacenter (Stockholm `dc-sto1` eller Falkenberg `dc-fbg1`), skriv en beskrivning,
+Välj datacenter — sajtens bucket ligger i Falkenberg (`dc-fbg1`), skriv en beskrivning,
 och kryssa i att en bucket ska skapas direkt — döp den till `agatrion-media`.
 Klicka **Create new instance**.
 
@@ -95,13 +95,15 @@ skapas. Secret key går inte att få fram igen — skapa i så fall en ny under
 | Fråga | Svar (Stockholm) |
 | --- | --- |
 | Access Key / Secret Key | nycklarna från steg 2 |
-| Default Region | `dc-sto1` |
-| S3 Endpoint | `objects.dc-sto1.glesys.net` |
-| DNS-style bucket+hostname | `%(bucket)s.objects.dc-sto1.glesys.net` |
+| Default Region | `dc-fbg1` |
+| S3 Endpoint | `objects.dc-fbg1.glesys.net` |
+| DNS-style bucket+hostname | `%(bucket)s.objects.dc-fbg1.glesys.net` |
 | Use HTTPS protocol | `Yes` |
 | HTTP Proxy | lämna tomt |
 
-Ligger instansen i Falkenberg byts `dc-sto1` mot `dc-fbg1` överallt. Testa med
+Ligger instansen i Stockholm byts `dc-fbg1` mot `dc-sto1` överallt. Fel datacenter ger
+`403 InvalidAccessKeyId` på allt utom `s3cmd ls` — ett förvirrande felmeddelande som
+egentligen betyder "fel endpoint". Testa med
 `s3cmd ls` — bucketen ska synas. Nycklarna hamnar i `~/.s3cfg` och ska aldrig checkas in.
 
 **4. Gör bucketen publikt läsbar.** Utan det här kan besökare inte höra något:
@@ -115,13 +117,13 @@ s3cmd setpolicy verktyg/bucket-policy.json s3://agatrion-media
 ```
 ./verktyg/publicera-media.sh --test     # visa vad som skulle hända
 ./verktyg/publicera-media.sh            # ladda upp
-python3 verktyg/satt-mediabas.py https://agatrion-media.objects.dc-sto1.glesys.net
+python3 verktyg/satt-mediabas.py https://agatrion-media.objects.dc-fbg1.glesys.net
 ```
 
 Först när en fil svarar tas mediafilerna ur git:
 
 ```
-curl -sI https://agatrion-media.objects.dc-sto1.glesys.net/ljud/tranas-2026/01-franz-schubert-schubert.mp3
+curl -sI https://agatrion-media.objects.dc-fbg1.glesys.net/ljud/tranas-2026/01-franz-schubert-schubert.mp3
 printf 'media/ljud/\nmedia/video/\n' >> .gitignore
 git rm -r --cached media/ljud media/video
 ```
@@ -129,7 +131,7 @@ git rm -r --cached media/ljud media/video
 ### Om adressen
 
 GleSYS dokumenterar inget stöd för eget domännamn på objektlagringen, så ljudlänkarna
-pekar på `agatrion-media.objects.dc-sto1.glesys.net`. Det syns bara i webbläsarens
+pekar på `agatrion-media.objects.dc-fbg1.glesys.net`. Det syns bara i webbläsarens
 nätverkspanel, inte för besökaren, och anropet sker först när någon trycker play.
 Vill du ha `media.agatrion.se` i stället krävs en tjänst som stödjer eget domännamn —
 Cloudflare R2 gör det, med 10 GB gratis.

@@ -44,7 +44,7 @@ samma gain, decimerar 96 → 48 kHz, konverterar till 16 bitar och kodar via `la
 Spårlistorna står i `CONCERTS` överst i skriptet.
 
 `media/ljud` och `media/video` ligger **inte i git** utan i en S3-bucket hos GleSYS
-(`agatrion-media`, endpoint `objects.dc-sto1.glesys.net`). Filerna finns kvar lokalt och synkas upp med
+(`agatrion-media`, endpoint `objects.dc-fbg1.glesys.net`). Filerna finns kvar lokalt och synkas upp med
 `verktyg/publicera-media.sh`; `verktyg/satt-mediabas.py` växlar sajtens länkar mellan
 bucketen och lokala filer. Bilder ligger kvar i repot — de är små och Open Graph-taggarna
 kräver samma domän som sidan. Se README för uppsättningen.

@@ -116,6 +116,10 @@ h1 + h2 { margin-top: 2rem; }
 
 /* --- Konserter --- */
 
+.concert-year {
+  font-family: var(--sans); font-size: .8rem; font-weight: 600; letter-spacing: .12em;
+  color: var(--muted); text-transform: uppercase; margin: 2.5rem 0 .25rem;
+}
 .concerts { list-style: none; margin: 0; padding: 0; }
 .concerts > li { padding-block: 1.4rem; border-bottom: 1px solid var(--rule); }
 .concerts > li:first-child { border-top: 1px solid var(--rule); }

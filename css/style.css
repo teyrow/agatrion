@@ -162,6 +162,13 @@ h3 .years { font-family: var(--sans); font-size: .8rem; font-weight: 400; color:
 .track-title .duration { font-variant-numeric: tabular-nums; margin-left: .4rem; }
 .track-title .duration:first-child { margin-left: 0; }
 .tracks audio { width: 100%; margin-top: .4rem; }
+.recording video { width: 100%; height: auto; border-radius: 3px; background: #000; }
+
+.video-grid { display: grid; gap: 1.75rem; }
+@media (min-width: 46rem) { .video-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; } }
+.video-grid figure { margin: 0; }
+.video-grid figcaption { font-size: .9rem; color: var(--muted); margin-top: .5rem; }
+
 .video-embed {
   position: relative; aspect-ratio: 16 / 9; background: var(--bg-soft);
   border: 0; padding: 0; width: 100%; cursor: pointer; border-radius: 3px; overflow: hidden;
@@ -170,7 +177,9 @@ h3 .years { font-family: var(--sans); font-size: .8rem; font-weight: 400; color:
 .video-embed .play-label {
   position: absolute; inset: 0; display: grid; place-content: center; gap: .5rem;
   color: var(--fg); font-family: var(--serif); font-size: 1.1rem;
+  border: 1px solid var(--rule); border-radius: 3px;
 }
+.video-embed:hover .play-label { color: var(--accent); border-color: var(--accent); }
 
 /* --- Kontakt --- */
 

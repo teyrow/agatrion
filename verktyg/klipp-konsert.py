@@ -49,7 +49,7 @@ CONCERTS = [
             (1193.53, 1476.69, "Andante", "Clara Schumann"),
             (1479.68, 1926.49, "Allegretto", "Clara Schumann"),
             (1929.48, 2349.60, "Andante ur Pianotrio nr 1", "Cécile Chaminade"),
-            (2352.59, 2657.87, "Lotta", ""),
+            (2352.59, 2657.87, "Sång till Lotta", "Jan Sandström"),
         ],
     },
     {

@@ -21,10 +21,10 @@ CHUNK_SEC = 20
 
 CONCERTS = [
     {
-        "slug": "kristianstad-2025",
+        "slug": "brannestad-2024",
         "wav": "kristianstad.wav",
-        "album": "AGA-trion live i Kristianstad 2025",
-        "year": "2025",
+        "album": "AGA-trion live i Brännestad musikateljé 2024",
+        "year": "2024",
         "tracks": [
             (0.05, 640.09, "Allegro moderato", "Clara Schumann"),
             (640.09, 914.66, "Scherzo och Trio", "Clara Schumann"),

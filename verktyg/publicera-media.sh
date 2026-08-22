@@ -14,7 +14,8 @@
 
 set -euo pipefail
 
-BUCKET="${AGATRION_BUCKET:-media.agatrion.se}"
+BUCKET="${AGATRION_BUCKET:-agatrion-media}"
+DC="${AGATRION_DC:-dc-sto1}"
 ROT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 MAPPAR=(ljud video)
 
@@ -51,5 +52,5 @@ done
 if [ -z "$TORR" ]; then
   echo
   echo "Klart. Kontrollera en fil:"
-  echo "  curl -sI https://$BUCKET/ljud/tranas-2026/01-franz-schubert-schubert.mp3 | head -3"
+  echo "  curl -sI https://$BUCKET.objects.$DC.glesys.net/ljud/tranas-2026/01-franz-schubert-schubert.mp3 | head -3"
 fi

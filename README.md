@@ -78,39 +78,61 @@ men är gitignorerade.
 
 ### Engångsuppsättning
 
-1. Skapa en bucket i GleSYS kontrollpanel. **Döp den exakt till `media.agatrion.se`** —
-   då fungerar ett eget domännamn via CNAME.
-2. Skapa en API-nyckel till objektlagringen och lägg den i `~/.s3cfg`:
+**1. Skapa en instans.** I GleSYS kontrollpanel: **Storage → Object storage → Create**.
+Välj datacenter (Stockholm `dc-sto1` eller Falkenberg `dc-fbg1`), skriv en beskrivning,
+och kryssa i att en bucket ska skapas direkt — döp den till `agatrion-media`.
+Klicka **Create new instance**.
 
-   ```
-   [default]
-   access_key = DIN_NYCKEL
-   secret_key = DIN_HEMLIGHET
-   host_base = objects.dc-sto1.glesys.net
-   host_bucket = %(bucket)s.objects.dc-sto1.glesys.net
-   use_https = True
-   ```
+En bucket ligger alltså inuti en instans; det är instansen du skapar först. Menyvalen
+*File storage* och *Archives* är andra tjänster och ska inte användas här.
 
-   Ligger bucketen i Falkenberg heter värden `objects.dc-fbg1.glesys.net` i stället.
-   Nycklarna ska aldrig checkas in.
-3. Lägg en CNAME i DNS: `media` → `media.agatrion.se.objects.dc-sto1.glesys.net.`
-   Kontrollera med GleSYS support att de terminerar HTTPS för eget domännamn. Gör de
-   inte det får sajten peka direkt på bucket-adressen i stället — samma sak fungerar,
-   men adressen blir längre.
-4. Ladda upp allt och peka om sajten:
+**2. Spara nycklarna.** Access key och secret key visas en enda gång när instansen
+skapas. Secret key går inte att få fram igen — skapa i så fall en ny under
+**Access keys**.
 
-   ```
-   ./verktyg/publicera-media.sh --test     # visa vad som skulle hända
-   ./verktyg/publicera-media.sh            # ladda upp
-   python3 verktyg/satt-mediabas.py https://media.agatrion.se
-   ```
+**3. Konfigurera s3cmd.** Kör `s3cmd --configure` och svara:
 
-   Först därefter tas mediafilerna ur git:
+| Fråga | Svar (Stockholm) |
+| --- | --- |
+| Access Key / Secret Key | nycklarna från steg 2 |
+| Default Region | `dc-sto1` |
+| S3 Endpoint | `objects.dc-sto1.glesys.net` |
+| DNS-style bucket+hostname | `%(bucket)s.objects.dc-sto1.glesys.net` |
+| Use HTTPS protocol | `Yes` |
+| HTTP Proxy | lämna tomt |
 
-   ```
-   printf 'media/ljud/\nmedia/video/\n' >> .gitignore
-   git rm -r --cached media/ljud media/video
-   ```
+Ligger instansen i Falkenberg byts `dc-sto1` mot `dc-fbg1` överallt. Testa med
+`s3cmd ls` — bucketen ska synas. Nycklarna hamnar i `~/.s3cfg` och ska aldrig checkas in.
+
+**4. Gör bucketen publikt läsbar.** Utan det här kan besökare inte höra något:
+
+```
+s3cmd setpolicy verktyg/bucket-policy.json s3://agatrion-media
+```
+
+**5. Ladda upp och peka om sajten:**
+
+```
+./verktyg/publicera-media.sh --test     # visa vad som skulle hända
+./verktyg/publicera-media.sh            # ladda upp
+python3 verktyg/satt-mediabas.py https://agatrion-media.objects.dc-sto1.glesys.net
+```
+
+Först när en fil svarar tas mediafilerna ur git:
+
+```
+curl -sI https://agatrion-media.objects.dc-sto1.glesys.net/ljud/tranas-2026/01-franz-schubert-schubert.mp3
+printf 'media/ljud/\nmedia/video/\n' >> .gitignore
+git rm -r --cached media/ljud media/video
+```
+
+### Om adressen
+
+GleSYS dokumenterar inget stöd för eget domännamn på objektlagringen, så ljudlänkarna
+pekar på `agatrion-media.objects.dc-sto1.glesys.net`. Det syns bara i webbläsarens
+nätverkspanel, inte för besökaren, och anropet sker först när någon trycker play.
+Vill du ha `media.agatrion.se` i stället krävs en tjänst som stödjer eget domännamn —
+Cloudflare R2 gör det, med 10 GB gratis.
 
 ### Löpande
 

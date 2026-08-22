@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Vad det här är
 
-Webbplatsen för AGA-trion — en klassisk pianotrio (Anna Ighe violin, Gösta Nylund piano,
+Webbplatsen för AGA-trion — en klassisk pianotrio (Anna Ighe Ramqvist violin, Gösta Nylund piano,
 Andreas Josephson cello) verksam sedan 2009. Publiceras via GitHub Pages från branchen
 `main` på domänen agatrion.se. Allt innehåll är på svenska.
 

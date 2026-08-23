@@ -60,7 +60,16 @@
 
       <h2>Kommande</h2>
       <!-- FYLL I: kommande konserter. Kopiera ett <li>-block från "Tidigare" och ändra datum,
-           plats och program. Ta bort <p class="empty-note"> nedan när första datumet är på plats. -->
+           plats och program. Ta bort <p class="empty-note"> nedan när första datumet är på plats.
+
+           Gör också en kalenderfil så besökare kan lägga in konserten i telefonen:
+
+             python3 verktyg/skapa-ics.py --datum 2026-11-14 --tid 18:00 --langd 60 \
+                 --plats "Tranås kyrka" --ort "Tranås" --text "Meditativa toner. Fri entré."
+
+           Skriptet skriver ut länken som ska in i konsertens <p class="programme">:
+
+             <a class="kalender" href="/kalender/2026-11-14-tranas-kyrka.ics">Lägg till i kalendern</a> -->
       <p class="empty-note">Inga datum är spikade just nu. Vill ni bjuda in oss?
         <a href="/kontakt.html">Hör av er</a> — vi lägger upp nya konserter här så fort de är klara.</p>
     </div>
@@ -668,7 +677,8 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <p>AGA-trion — pianotrio sedan 2009.</p>
+    <p>AGA-trion — pianotrio sedan 2009.
+      <button type="button" class="dela" hidden>Dela sidan</button></p>
     <ul>
       <li><a href="https://www.facebook.com/agatrion/">Facebook</a></li>
       <li><a href="https://soundcloud.com/aga-trion">SoundCloud</a></li>
@@ -676,5 +686,6 @@
     </ul>
   </div>
 </footer>
+<script src="/js/dela.js" defer></script>
 </body>
 </html>

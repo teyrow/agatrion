@@ -153,6 +153,19 @@ Vill du tillfälligt köra allt lokalt igen — till exempel för att testa utan
 python3 verktyg/satt-mediabas.py --lokalt
 ```
 
+## Kalenderfiler för kommande konserter
+
+När en konsert är bokad, gör en `.ics`-fil så besökaren kan lägga in den i sin egen kalender:
+
+```
+python3 verktyg/skapa-ics.py --datum 2026-11-14 --tid 18:00 --langd 60 \
+    --plats "Tranås kyrka" --ort "Tranås" --text "Meditativa toner. Fri entré."
+```
+
+Filen hamnar i `kalender/` och skriptet skriver ut länken som ska in i konsertens
+`<p class="programme">`. Tiderna räknas om till UTC, så filen visar rätt klockslag
+oavsett var besökaren befinner sig. När konserten är spelad kan filen tas bort.
+
 ## Video
 
 Videor bäddas in från YouTube, men först när besökaren klickar på uppspelningsknappen —

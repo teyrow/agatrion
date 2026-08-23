@@ -197,4 +197,13 @@ h3 .years { font-family: var(--sans); font-size: .8rem; font-weight: 400; color:
   padding-block: 2rem 3rem; color: var(--muted); font-size: .9rem;
 }
 .site-footer .wrap { display: flex; flex-wrap: wrap; gap: .5rem 2rem; justify-content: space-between; }
+a.kalender::before { content: "＋ "; }
+
+button.dela {
+  font: inherit; font-size: .9rem; color: var(--accent); background: none;
+  border: 1px solid var(--rule); border-radius: 3px; padding: .2rem .7rem;
+  margin-left: .5rem; cursor: pointer;
+}
+button.dela:hover { border-color: var(--accent); }
+
 .site-footer ul { list-style: none; display: flex; flex-wrap: wrap; gap: 1.25rem; margin: 0; padding: 0; }

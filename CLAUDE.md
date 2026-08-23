@@ -84,6 +84,10 @@ tills någon lyssnat.
 - `verktyg/bygg-urval.py` bygger den lokala sidan `urval/index.html` där man lyssnar igenom
   allt och bekräftar verk via rullgardiner. Sidan hamnar i `docs/urval/`, som är
   gitignorerad, och spelar filerna i `docs/media/ljud` direkt.
+- `verktyg/bygg-granska.py` bygger `docs/granska/index.html` — samma material men skrivet
+  för Anna och Gösta: bara verk, sats, tonsättare, en spelare och en kommentarsruta.
+  Den publiceras med sajten men är `noindex` och länkas inte från menyn, och spelar
+  ljudet från objektlagringen så att den fungerar för den som inte har filerna.
 
 ## Publicering
 

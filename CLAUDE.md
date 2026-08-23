@@ -60,6 +60,25 @@ Filerna cachas med `immutable` i ett år, så **en ändrad inspelning måste byt
 `<audio>`-element måste ha `preload="none"`, annars laddar `lyssna.html` ner hundratals
 megabyte vid varje besök.
 
+## Vilket verk är vilket
+
+Sidorna ska ange **verk, sats och tonsättare** för varje spår, men filnamnen gör det inte —
+flera spår heter bara `01-mendelsohn.mp3`. Kopplingen mellan mp3-fil och verk bor i
+`verktyg/verk.py` (`VERK` beskriver verken, `SPAR` kopplar filerna, `KONSERTER` platser och
+datum). Varje koppling bär en säkerhetsnivå: `belagd`, `analys`, `sannolik` eller `gissning`.
+**Hitta inte på verk för att fylla luckorna** — spår som är `gissning` ska förbli gissningar
+tills någon lyssnat.
+
+- `verktyg/satt-verktitlar.py` skriver om spårlistorna på `lyssna.html` och `arkiv.html`
+  utifrån katalogen. Idempotent, och vägrar skriva om ett block den inte kunnat läsa i sin
+  helhet. `bygg-arkiv.py` kör den automatiskt sist.
+- `verktyg/jamfor-inspelningar.py` parar ihop spår som är samma musik genom att jämföra
+  kromagram (DTW, plus delsträcksökning som hittar en sats inuti en hel trio). Tröskeln
+  0,147 är kalibrerad mot de 85 kända paren. Kromagrammen mellanlagras i `verktyg/.kroma/`,
+  som inte ligger i git.
+- `verktyg/bygg-urval.py` bygger den lokala sidan `urval/index.html` där man lyssnar igenom
+  allt och bekräftar verk via rullgardiner. Den spelar filerna i `media/ljud` direkt.
+
 ## Publicering
 
 Push till `main` publicerar direkt. `CNAME` innehåller `agatrion.se`; DNS pekar apex med

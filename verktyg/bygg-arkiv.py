@@ -10,6 +10,11 @@ i tempschumann och bland Audacity-projekten.
     python3 verktyg/bygg-arkiv.py --bara-sida  # skriv bara om arkiv.html
 
 Ljudet hamnar i media/ljud/<konsert>/ och laddas upp med publicera-media.sh.
+
+Spårrubrikerna här är bara de råa etiketterna. Verk, sats och tonsättare sätts
+efteråt av verktyg/satt-verktitlar.py, som skriptet kör automatiskt på slutet —
+kör aldrig det här skriptet utan att låta det steget gå igenom, annars ramlar
+sidan tillbaka till namn som "Haydn II".
 """
 import html
 import os
@@ -112,7 +117,7 @@ FARDIGA_MP3 = [
 
 VIDEO = [
     ("ekebyborna-2021", "Ekebyborna hembygdsgård", "17 juli 2021",
-     "Tre telefonklipp från sommarspelningen utomhus, i full HD.",
+     "Tre telefonklipp från sommarspelningen inomhus, i full HD.",
      [("ekebyborna-2021-1.mp4", "Klipp 1"),
       ("ekebyborna-2021-2.mp4", "Klipp 2"),
       ("ekebyborna-2021-3.mp4", "Klipp 3")]),
@@ -382,7 +387,14 @@ def skriv_sida():
           % (len(poster), sum(len(p[4]) for p in poster)))
 
 
+def satt_titlar():
+    """Låt verk.py bestämma vad som står på raderna."""
+    subprocess.run([sys.executable, os.path.join(ROT, "verktyg", "satt-verktitlar.py")],
+                   check=True)
+
+
 if __name__ == "__main__":
     if "--bara-sida" not in sys.argv:
         koda_allt()
     skriv_sida()
+    satt_titlar()

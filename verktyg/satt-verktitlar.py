@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Skriv om spårlistorna på lyssna.html och arkiv.html så att verk, sats och
+tonsättare står utsatta.
+
+Uppgifterna kommer ur verktyg/verk.py. Skriptet läser vilka ljudfiler varje
+spår pekar på och byter ut rubrikerna — allt annat på sidorna lämnas ifred.
+
+    python3 verktyg/satt-verktitlar.py            # skriv om
+    python3 verktyg/satt-verktitlar.py --test     # visa bara vad som skulle ändras
+
+Lyssnasidan grupperar per verk, med tonsättare och verk i mellanrubriken och
+satserna som spårrader. Arkivsidan är en rak lista, så där står verket på varje
+rad. Spår vars verk ännu inte är bekräftat får en kommentar med FYLL I intill.
+"""
+import html
+import os
+import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import verk                                                    # noqa: E402
+
+ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# kommentaren mellan <li> och <p> är vår egen FYLL I-markering från förra körningen
+SPAR_RE = re.compile(r'<li>\s*(?:<!--.*?-->\s*)*<p class="track-title">(.*?)</p>\s*'
+                     r'(<audio[^>]*src="([^"]*)"[^>]*></audio>)\s*</li>', re.S)
+TID_RE = re.compile(r'<span class="duration">([^<]*)</span>')
+
+
+def nyckel(src):
+    """media-sökväg -> "konsert/fil.mp3", oavsett om länken går till bucketen."""
+    m = re.search(r"/ljud/([^/]+/[^/\"]+\.mp3)", src)
+    return m.group(1) if m else None
+
+
+def spar_i(block):
+    ut = []
+    for m in SPAR_RE.finditer(block):
+        titel, audio, src = m.group(1), m.group(2), m.group(3)
+        tid = TID_RE.search(titel)
+        ut.append({"hela": m.group(0), "audio": audio, "fil": nyckel(src),
+                   "tid": tid.group(1) if tid else None})
+    return ut
+
+
+OKAND = "FYLL I"
+
+
+def rad(spar, visa_verk, indrag):
+    u = verk.uppgift(spar["fil"])
+    if not u:
+        return None
+    tonsattare, titel, sats, saker = u
+    delar = []
+    if visa_verk and titel != OKAND:
+        delar.append(html.escape(titel))
+        if sats:
+            delar.append('<span class="movement">%s</span>' % html.escape(sats))
+    elif not visa_verk and sats:
+        # verket står redan i mellanrubriken; raden behöver bara satsen
+        delar.append(html.escape(sats))
+    if spar["tid"]:
+        delar.append('<span class="duration">%s</span>' % spar["tid"])
+    if visa_verk:
+        delar.append('<span class="composer">%s</span>' % html.escape(tonsattare))
+    i = " " * indrag
+    rader = ["%s<li>" % i]
+    if saker == "gissning":
+        rader.append("%s  <!-- FYLL I: vilket verk är det h\u00e4r? Bekr\u00e4fta genom att "
+                     "lyssna, se verktyg/bygg-urval.py -->" % i)
+    rader.append('%s  <p class="track-title">%s</p>' % (i, " ".join(delar)))
+    rader.append("%s  %s" % (i, spar["audio"]))
+    rader.append("%s</li>" % i)
+    return "\n".join(rader)
+
+
+def rubrik(fil, indrag):
+    """Tonsättaren, och verket när vi vet vilket det är."""
+    tonsattare, titel, _, _ = verk.uppgift(fil)
+    if titel == OKAND:
+        return "%s<h3>%s</h3>" % (" " * indrag, html.escape(tonsattare))
+    return ('%s<h3>%s <span class="years">%s</span></h3>'
+            % (" " * indrag, html.escape(tonsattare), html.escape(titel)))
+
+
+def bygg_grupperat(spar, indrag):
+    """Lyssnasidan: en mellanrubrik per verk, satserna som rader under."""
+    ut, i = [], 0
+    while i < len(spar):
+        vid = verk.SPAR.get(spar[i]["fil"], (None,))[0]
+        j = i
+        while j < len(spar) and verk.SPAR.get(spar[j]["fil"], (None,))[0] == vid:
+            j += 1
+        ut.append(rubrik(spar[i]["fil"], indrag))
+        ut.append('%s<ol class="tracks">' % (" " * indrag))
+        ut += [rad(s, False, indrag + 2) for s in spar[i:j]]
+        ut.append("%s</ol>" % (" " * indrag))
+        i = j
+    return "\n".join(ut)
+
+
+def bygg_platt(spar, indrag):
+    """Arkivsidan: rak lista där varje rad bär verk, sats och tonsättare."""
+    ut = ['%s<ol class="tracks">' % (" " * indrag)]
+    ut += [rad(s, True, indrag + 2) for s in spar]
+    ut.append("%s</ol>" % (" " * indrag))
+    return "\n".join(ut)
+
+
+def skriv_om(sidnamn, grupperat, test):
+    bana = os.path.join(ROT, sidnamn)
+    s = original = open(bana, encoding="utf-8").read()
+    ändrade = 0
+    for artikel in re.findall(r'<article class="recording".*?</article>', s, re.S):
+        spar = spar_i(artikel)
+        if not spar or any(x["fil"] is None or verk.uppgift(x["fil"]) is None for x in spar):
+            continue
+        # skriv aldrig om ett block vi inte lyckats läsa i sin helhet — då skulle
+        # spåren vi missade försvinna ur sidan
+        if len(spar) != artikel.count("<audio"):
+            raise SystemExit("%s: hittade %d spår men %d ljudelement i %s — avbryter"
+                             % (sidnamn, len(spar), artikel.count("<audio"),
+                                re.search(r'id="([^"]*)"', artikel).group(1)))
+        # allt från första mellanrubriken eller spårlistan fram till </article>
+        start = artikel.find("<h3>") if grupperat else artikel.find('<ol class="tracks">')
+        if start < 0:
+            start = artikel.find('<ol class="tracks">')
+        radslut = artikel.rfind("\n", 0, start)
+        indrag = start - radslut - 1
+        avslut = re.search(r"\n(\s*)</article>", artikel)
+        ny = (artikel[:start]
+              + (bygg_grupperat(spar, indrag) if grupperat
+                 else bygg_platt(spar, indrag)).lstrip()
+              + "\n%s</article>" % avslut.group(1))
+        if ny != artikel:
+            s = s.replace(artikel, ny)
+            ändrade += 1
+    if test:
+        print("%s: %d block skulle skrivas om" % (sidnamn, ändrade))
+    elif s != original:
+        open(bana, "w", encoding="utf-8").write(s)
+        print("%s: skrev om %d block" % (sidnamn, ändrade))
+    else:
+        print("%s: oförändrad" % sidnamn)
+
+
+if __name__ == "__main__":
+    test = "--test" in sys.argv
+    skriv_om("lyssna.html", grupperat=True, test=test)
+    skriv_om("arkiv.html", grupperat=False, test=test)

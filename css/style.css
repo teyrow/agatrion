@@ -195,6 +195,9 @@ h3 .years { font-family: var(--sans); font-size: .8rem; font-weight: 400; color:
 .track-title .composer { display: block; }
 .track-title .duration { font-variant-numeric: tabular-nums; margin-left: .4rem; }
 .track-title .duration:first-child { margin-left: 0; }
+/* satsbeteckningen står efter verket, men läses som en underrubrik till det */
+.track-title .movement { font-family: var(--sans); font-size: .9rem; color: var(--muted); }
+.track-title .movement::before { content: " · "; }
 .tracks audio { width: 100%; margin-top: .4rem; }
 .recording video { width: 100%; height: auto; border-radius: 3px; background: #000; }
 

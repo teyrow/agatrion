@@ -114,7 +114,13 @@ luften, `<audio>` utan `preload="none"`, bilder utan `alt` eller mått, kontrast
 WCAG AA i båda lägena, och sitemap som listar `noindex`-sidor. `--natet` kollar dessutom
 att de externa länkarna svarar. Inga utskrivna rader betyder att allt är i sin ordning.
 
-Kör den innan varje push. Lighthouse körs vid behov:
+`docs/sitemap.xml` skrivs av `verktyg/bygg-sitemap.py`, med `lastmod` hämtad ur senaste
+commit för varje sida. `priority` och `changefreq` är medvetet borta — Google slutade läsa
+dem 2023. Nyttan är liten på en sajt där alla fem sidor står i menyn; den finns för att
+`konserter.html` faktiskt uppdateras. Granskningen larmar om ett datum påstår sig vara
+nyare än verkligheten, eller halkat mer än en vecka efter.
+
+Kör granskningen innan varje push. Lighthouse körs vid behov:
 
 ```
 nvm use 22.2.0

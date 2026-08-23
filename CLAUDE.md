@@ -111,8 +111,7 @@ Logotypen, färgerna och anfangen är dokumenterade på `docs/profil/` — en ol
 inte tar: obalanserad HTML, dubbla `h1`, rubriknivåer som hoppar, meny som glidit isär
 mellan sidorna, `aria-current` på fel länk, interna länkar och ankare som pekar i tomma
 luften, `<audio>` utan `preload="none"`, bilder utan `alt` eller mått, kontraster under
-WCAG AA i båda lägena. `--natet` kollar dessutom
-att de externa länkarna svarar. Inga utskrivna rader betyder att allt är i sin ordning.
+WCAG AA i båda lägena. `--natet` kollar dessutom att de externa länkarna svarar. Inga utskrivna rader betyder att allt är i sin ordning.
 
 Det finns ingen `sitemap.xml`. Alla fem sidor står i menyn på varenda sida, så en robot
 som hittar startsidan har hittat allt — Google säger själva att sajtkartor är onödiga under

@@ -141,8 +141,8 @@ def bygg_enstaka(bas):
           '  <section class="section" id="inspelningar">',
           '    <div class="wrap">',
           "      <h2>Inspelningar</h2>",
-          '      <p class="section-lead prose">Ett verk i taget, i den inspelning vi tycker '
-          "bäst om. Under varje rad står var och när den gjordes.</p>",
+          '      <p class="section-lead prose">Ett litet urval — fem verk i de inspelningar '
+          "vi tycker bäst om. Under varje rad står var och när den gjordes.</p>",
           '      <ol class="tracks">']
     for fil in sorted(verk.VAL, key=sortnyckel):
         tonsattare, titel, sats, saker = verk.uppgift(fil)

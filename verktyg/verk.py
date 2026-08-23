@@ -223,29 +223,14 @@ KONSERTER = {
 # Har ett verk flera, står de kvar på lyssnasidan men utan länk — då är det inte
 # avgjort vilken inspelning som ska vara verkets exempel.
 VAL = [
-    "tranas-2026/01-franz-schubert-schubert.mp3",
-    "tranas-2026/02-felix-mendelssohn-mendelssohn.mp3",
-    "tranas-2026/08-john-williams-tema-ur-schindler-s-list.mp3",
+    # Fem spår, fem tonsättare, fem tonfall — lyssnasidan ska gå att höra klart.
+    # Amanda Maier-Röntgen och Jan Sandström saknas med flit: hon finns som video
+    # på samma sida, han på startsidan. Hela konserterna ligger i arkivet.
     "brannestad-2024/01-clara-schumann-allegro-moderato.mp3",
-    "brannestad-2024/02-clara-schumann-scherzo-och-trio.mp3",
-    "brannestad-2024/03-clara-schumann-andante.mp3",
-    "brannestad-2024/04-clara-schumann-allegretto.mp3",
-    "brannestad-2024/05-amanda-maier-rontgen-allegro.mp3",
-    "brannestad-2024/06-amanda-maier-rontgen-scherzo.mp3",
-    "brannestad-2024/07-amanda-maier-rontgen-andante.mp3",
-    "brannestad-2024/08-amanda-maier-rontgen-finale-allegro-con-fuoco.mp3",
+    "tranas-2026/01-franz-schubert-schubert.mp3",
     "skanninge-2024/01-sehr-lebhaft.mp3",
-    "skanninge-2024/02-mit-innigem-ausdruck-lebhaft.mp3",
-    "skanninge-2024/03-in-massiger-bewegung.mp3",
-    "skanninge-2024/04-nicht-zu-rasch.mp3",
     "ekeby-2023/07-chaminade.mp3",
-    "rassnas-2023/01-joseph-haydn-pianotrio-i-g-dur.mp3",
     "rassnas-2023/03-astor-piazzolla-oblivion.mp3",
-    "rassnas-2023/04-jan-sandstrom-sang-till-lotta.mp3",
-    "bjarka-saby-2022/01-romance-ur-3-miniatyrer-for-pianotrio-av-frank-bridge.mp3",
-    "bjarka-saby-2022/02-sju-variationer-over-jag-vet-en-dejlig-rosa-av-erland-von-ko.mp3",
-    "landeryd-2022/03-prelude.mp3",
-    "landeryd-2022/04-cradle-song.mp3",
 ]
 
 

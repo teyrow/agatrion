@@ -69,7 +69,10 @@ def skriv():
          '<meta name="viewport" content="width=device-width, initial-scale=1">',
          '<meta name="robots" content="noindex, nofollow">',
          "<title>Stämmer det här? — AGA-trion</title>",
+         # utan ikonlänk ber webbläsaren om /favicon.ico och får en 404 i konsolen
+         '<link rel="icon" href="/favicon.svg" type="image/svg+xml">',
          "<style>%s</style>" % STIL, "</head>", "<body>",
+         "<main>",
          "<h1>Stämmer det här?</h1>",
          '<p class="ingress">Här ligger alla %d inspelningar vi har, med det jag tror att '
          "de är. En hel del är gissat ur filnamn och gamla etiketter, så det finns säkert "
@@ -112,7 +115,8 @@ def skriv():
         d.append("</ol>")
         d.append("</section>")
 
-    d += ['<div class="panel">',
+    d += ["</main>",
+          '<div class="panel">',
           '<span id="rakning">Inget skrivet än</span>',
           '<button id="kopiera">Kopiera</button>',
           "</div>",

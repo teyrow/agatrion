@@ -77,13 +77,13 @@ def sida():
          "färger och fem tunna strängar tvärs över. Strängarna läser som ett notsystem utan "
          "att stava ut det. Efter blocket står <i>-trion</i> i vanlig textfärg.</p>",
          '<figure class="visning">',
-         '<img src="/media/bild/logotyp.svg" alt="AGA-trion" width="420">',
+         '<img src="/media/bild/logotyp.svg" alt="AGA-trion" width="420" height="84">',
          "<figcaption>Liggande logotyp. Förstahandsvalet.</figcaption></figure>",
          '<div class="par">',
          '<figure class="visning"><img src="/media/bild/logotyp-block.svg" alt="AGA" '
-         'width="150"><figcaption>Blocket ensamt, när namnet redan står i sammanhanget.'
+         'width="150" height="56"><figcaption>Blocket ensamt, när namnet redan står i sammanhanget.'
          "</figcaption></figure>",
-         '<figure class="visning"><img src="/favicon.svg" alt="AGA-trion" width="96">'
+         '<figure class="visning"><img src="/favicon.svg" alt="AGA-trion" width="96" height="96">'
          "<figcaption>Märket. Favicon, profilbild, stämpel.</figcaption></figure>",
          "</div>",
 

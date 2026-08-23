@@ -21,6 +21,7 @@ Måttsystemet: versalhöjden är 100 enheter, y växer nedåt.
 """
 import json
 import os
+import re
 
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAJT = os.path.join(ROT, "docs")
@@ -42,6 +43,15 @@ RADIE = 14
 MELLANRUM = 34     # mellan blocket och ordet
 
 
+def kapa(bana, decimaler=2):
+    """Konturerna kommer med sjutton decimaler ur typsnittet. Två räcker gott —
+    versalhöjden är 100 enheter, så det är hundradels procent av bokstaven, och
+    filen krymper till hälften."""
+    return re.sub(r"-?\d+\.\d+",
+                  lambda m: ("%.*f" % (decimaler, float(m.group()))).rstrip("0").rstrip(".")
+                  or "0", bana)
+
+
 def bokstav(tecken, x, baslinje, fyll, gloria=None):
     g = G[tecken]
     kant = ""
@@ -49,7 +59,7 @@ def bokstav(tecken, x, baslinje, fyll, gloria=None):
         kant = (' stroke="%s" stroke-width="%s" stroke-linejoin="round" '
                 'style="paint-order:stroke"' % (gloria, GLORIA))
     return ('  <path transform="translate(%s %s)" d="%s" fill="%s"%s/>'
-            % (round(x, 2), round(baslinje, 2), g["bana"], fyll, kant)), g["bredd"]
+            % (round(x, 2), round(baslinje, 2), kapa(g["bana"]), fyll, kant)), g["bredd"]
 
 
 def strangar(bredd, hojd, fyll):

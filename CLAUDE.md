@@ -105,6 +105,26 @@ Logotypen, färgerna och anfangen är dokumenterade på `docs/profil/` — en ol
 - **Färgerna har ett enda original**, `:root` i `style.css`. Profilsidan läser därifrån, så
   `verktyg/bygg-profil.py` måste köras om när paletten ändras.
 
+## Granskning
+
+`python3 verktyg/kolla-sajten.py` går igenom alla nio sidor och letar efter det Lighthouse
+inte tar: obalanserad HTML, dubbla `h1`, rubriknivåer som hoppar, meny som glidit isär
+mellan sidorna, `aria-current` på fel länk, interna länkar och ankare som pekar i tomma
+luften, `<audio>` utan `preload="none"`, bilder utan `alt` eller mått, kontraster under
+WCAG AA i båda lägena, och sitemap som listar `noindex`-sidor. `--natet` kollar dessutom
+att de externa länkarna svarar. Inga utskrivna rader betyder att allt är i sin ordning.
+
+Kör den innan varje push. Lighthouse körs vid behov:
+
+```
+nvm use 22.2.0
+npx lighthouse http://localhost:8765/ --preset=desktop --view
+```
+
+Två anmärkningar från Lighthouse lämnas medvetet obesvarade: **Minify CSS** (stilmallen ska
+gå att läsa — det är hela poängen med att slippa byggsteg) och **Use efficient cache
+lifetimes** (GitHub Pages sätter sina egna svarshuvuden, vi når dem inte).
+
 ## Publicering
 
 Push till `main` publicerar direkt, från mappen `docs/`. `docs/CNAME` innehåller

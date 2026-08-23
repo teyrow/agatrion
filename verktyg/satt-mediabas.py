@@ -16,11 +16,13 @@ import re
 import sys
 
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sajten ligger i docs/ — allt utanför den mappen publiceras aldrig
+SAJT = os.path.join(ROT, "docs")
 MAPPAR = ("ljud", "video")
 
 
 def filer():
-    return sorted(glob.glob(os.path.join(ROT, "*.html")))
+    return sorted(glob.glob(os.path.join(SAJT, "*.html")))
 
 
 def byt(bas, test=False):

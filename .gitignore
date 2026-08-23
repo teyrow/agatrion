@@ -1,6 +1,6 @@
 .DS_Store
 __pycache__/
-urval/
-media/ljud/
-media/video/
+docs/urval/
+docs/media/ljud/
+docs/media/video/
 verktyg/.kroma/

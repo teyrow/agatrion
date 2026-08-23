@@ -26,6 +26,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import verk                                                    # noqa: E402
 
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sajten ligger i docs/ — allt utanför den mappen publiceras aldrig
+SAJT = os.path.join(ROT, "docs")
 # kommentaren mellan <li> och <p> är vår egen FYLL I-markering från förra körningen
 # <li> kan bära ett id från förra körningen, och kommentaren mellan <li> och <p>
 # är vår egen FYLL I-markering — båda måste mönstret släppa igenom, annars läser
@@ -190,7 +192,7 @@ def satt_enstaka(s):
 
 
 def skriv_om(sidnamn, grupperat, test):
-    bana = os.path.join(ROT, sidnamn)
+    bana = os.path.join(SAJT, sidnamn)
     s = original = open(bana, encoding="utf-8").read()
     # avsnittet byggs om från grunden längre ner, så lyft undan det medan
     # artikelloopen går — annars skulle den försöka skriva om det också

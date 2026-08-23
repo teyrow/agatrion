@@ -2,7 +2,7 @@
 # Synka ljud och video till objektlagringen hos GleSYS.
 #
 # Mediafilerna ligger inte i git — de är stora och ändras aldrig. De bor här på
-# disk under media/ljud och media/video, och den här skriptet lägger upp dem i
+# disk under docs/media/ljud och docs/media/video, och det här skriptet lägger upp dem i
 # en S3-bucket som sajten sedan länkar till.
 #
 #   ./verktyg/publicera-media.sh --test    visar vad som skulle hända
@@ -37,7 +37,7 @@ command -v s3cmd >/dev/null || { echo "s3cmd saknas. Installera med: brew instal
 CACHE="Cache-Control:public, max-age=31536000, immutable"
 
 for mapp in "${MAPPAR[@]}"; do
-  kalla="$ROT/media/$mapp"
+  kalla="$ROT/docs/media/$mapp"
   [ -d "$kalla" ] || { echo "hoppar över $mapp (finns inte)"; continue; }
   echo "== $mapp -> s3://$BUCKET/$mapp/"
   s3cmd sync $TORR $STADA \

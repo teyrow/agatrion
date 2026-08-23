@@ -20,6 +20,8 @@ import unicodedata
 from zoneinfo import ZoneInfo
 
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sajten ligger i docs/ — allt utanför den mappen publiceras aldrig
+SAJT = os.path.join(ROT, "docs")
 TZ = ZoneInfo("Europe/Stockholm")
 
 
@@ -89,13 +91,13 @@ def main():
         rader.append("DESCRIPTION:%s" % esc(args.text))
     rader += ["END:VEVENT", "END:VCALENDAR"]
 
-    katalog = os.path.join(ROT, "kalender")
+    katalog = os.path.join(SAJT, "kalender")
     os.makedirs(katalog, exist_ok=True)
     sokvag = os.path.join(katalog, namn + ".ics")
     with open(sokvag, "w", newline="") as fh:
         fh.write("\r\n".join(fold(r) for r in rader) + "\r\n")
 
-    print("Skrev %s" % os.path.relpath(sokvag, ROT))
+    print("Skrev %s" % os.path.relpath(sokvag, SAJT))
     print()
     print("Klistra in i konserter.html, i konsertens <p class=\"programme\">:")
     print()

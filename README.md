@@ -1,7 +1,8 @@
 # agatrion.se
 
-Webbplatsen för AGA-trion. Ren HTML och CSS utan byggsteg — filerna i den här mappen är
-exakt det som ligger på servern. GitHub Pages publicerar `main` automatiskt vid varje push.
+Webbplatsen för AGA-trion. Ren HTML och CSS utan byggsteg — filerna i `docs/` är exakt
+det som ligger på servern. GitHub Pages publicerar den mappen från `main` vid varje push.
+Allt utanför `docs/` — verktygen och den här filen — når aldrig webben.
 
 ## Ändra något
 
@@ -9,10 +10,11 @@ exakt det som ligger på servern. GitHub Pages publicerar `main` automatiskt vid
 2. Titta på resultatet lokalt:
 
    ```
-   python3 -m http.server 8000
+   cd docs && python3 -m http.server 8000
    ```
 
-   Öppna sedan <http://localhost:8000>.
+   Öppna sedan <http://localhost:8000>. Servern måste stå i `docs`, annars hittar
+   sidorna varken css eller ljud.
 3. `git add`, `git commit`, `git push`. Sajten är uppdaterad inom ett par minuter.
 
 Sök efter `FYLL I` i filerna — där finns allt som är kvar att fylla i.
@@ -43,7 +45,7 @@ som gör att en kommande konsert kan dyka upp i Googles evenemangsvisning.
 
 ## Lägga till en inspelning
 
-Ljudfilerna ligger i `media/ljud/<konsert>/` som mp3. Ett spår läggs in i `lyssna.html` så här:
+Ljudfilerna ligger i `docs/media/ljud/<konsert>/` som mp3. Ett spår läggs in i `lyssna.html` så här:
 
 ```html
 <li>
@@ -73,7 +75,7 @@ Kräver `lame` (`brew install lame`) och `numpy` (`pip3 install numpy`).
 
 Ljud och video ligger inte i git. De är stora, ändras aldrig och skulle annars tränga
 undan GitHub Pages gräns på 1 GB. I stället bor de i en S3-bucket hos GleSYS och
-sajten länkar dit. Filerna finns kvar lokalt under `media/ljud` och `media/video`,
+sajten länkar dit. Filerna finns kvar lokalt under `docs/media/ljud` och `docs/media/video`,
 men är gitignorerade.
 
 ### Engångsuppsättning
@@ -124,8 +126,8 @@ Först när en fil svarar tas mediafilerna ur git:
 
 ```
 curl -sI https://agatrion-media.objects.dc-fbg1.glesys.net/ljud/tranas-2026/01-franz-schubert-schubert.mp3
-printf 'media/ljud/\nmedia/video/\n' >> .gitignore
-git rm -r --cached media/ljud media/video
+printf 'docs/media/ljud/\ndocs/media/video/\n' >> .gitignore
+git rm -r --cached docs/media/ljud docs/media/video
 ```
 
 ### Om adressen
@@ -138,7 +140,7 @@ Cloudflare R2 gör det, med 10 GB gratis.
 
 ### Löpande
 
-Nya inspelningar läggs i `media/ljud/<konsert>/` som vanligt, sedan:
+Nya inspelningar läggs i `docs/media/ljud/<konsert>/` som vanligt, sedan:
 
 ```
 ./verktyg/publicera-media.sh

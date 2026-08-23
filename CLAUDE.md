@@ -15,15 +15,20 @@ upplägget är att sajten ska gå att uppdatera om fem år utan verktygskedja. D
 
 ## Struktur
 
-Fem sidor: `index.html`, `konserter.html`, `repertoar.html`, `lyssna.html`, `kontakt.html`,
-plus `404.html`. Sidhuvud, navigation och sidfot är kopierade i varje fil — det är det
+**Allt som publiceras ligger i `docs/`.** GitHub Pages är inställt på att servera den
+mappen, så `verktyg/`, `CLAUDE.md` och `README.md` ligger kvar i roten och når aldrig
+webben. Det kostar inget byggsteg — samma filer, bara en nivå ner. Lägger du en ny sida
+utanför `docs/` blir den osynlig; lägger du en hjälpfil inuti `docs/` blir den publik.
+
+Fem sidor: `docs/index.html`, `konserter.html`, `repertoar.html`, `lyssna.html`,
+`kontakt.html`, plus `404.html`. Sidhuvud, navigation och sidfot är kopierade i varje fil — det är det
 medvetna priset för att slippa byggsteg. **Ändras navigationen måste alla sex filerna
 uppdateras**, och `aria-current="page"` sitta på rätt länk i varje.
 
-All styling ligger i `css/style.css` (CSS-variabler i `:root`, mörkt läge via
+All styling ligger i `docs/css/style.css` (CSS-variabler i `:root`, mörkt läge via
 `prefers-color-scheme`). Inga externa typsnitt, skript eller CDN — sajten gör inga
 tredjepartsanrop alls vid sidladdning, och det ska den fortsätta att inte göra.
-`js/player.js` är de enda tio raderna JavaScript: pausar övriga ljudspelare och laddar
+`docs/js/player.js` är de enda tio raderna JavaScript: pausar övriga ljudspelare och laddar
 YouTube-iframen först vid klick.
 
 ## Innehåll under arbete
@@ -35,7 +40,7 @@ måste komma från användaren eller från etikettfilerna i `/Users/aj/code/musi
 
 ## Ljud
 
-`media/ljud/<konsert>/NN-tonsattare-titel.mp3` — liveinspelningar klippta ur långa
+`docs/media/ljud/<konsert>/NN-tonsattare-titel.mp3` — liveinspelningar klippta ur långa
 wav-filer. Källmaterialet ligger utanför repot i `/Users/aj/code/music-convert/sources`
 (32-bitars PCM, 48/96 kHz, med Audacity-etiketter i `.txt`-filerna som anger spårgränser).
 
@@ -43,7 +48,7 @@ wav-filer. Källmaterialet ligger utanför repot i `/Users/aj/code/music-convert
 samma gain, decimerar 96 → 48 kHz, konverterar till 16 bitar och kodar via `lame -V 3`.
 Spårlistorna står i `CONCERTS` överst i skriptet.
 
-`media/ljud` och `media/video` ligger **inte i git** utan i en S3-bucket hos GleSYS
+`docs/media/ljud` och `docs/media/video` ligger **inte i git** utan i en S3-bucket hos GleSYS
 (`agatrion-media`, endpoint `objects.dc-fbg1.glesys.net`). Filerna finns kvar lokalt och synkas upp med
 `verktyg/publicera-media.sh`; `verktyg/satt-mediabas.py` växlar sajtens länkar mellan
 bucketen och lokala filer. Bilder ligger kvar i repot — de är små och Open Graph-taggarna
@@ -77,15 +82,18 @@ tills någon lyssnat.
   0,147 är kalibrerad mot de 85 kända paren. Kromagrammen mellanlagras i `verktyg/.kroma/`,
   som inte ligger i git.
 - `verktyg/bygg-urval.py` bygger den lokala sidan `urval/index.html` där man lyssnar igenom
-  allt och bekräftar verk via rullgardiner. Den spelar filerna i `media/ljud` direkt.
+  allt och bekräftar verk via rullgardiner. Sidan hamnar i `docs/urval/`, som är
+  gitignorerad, och spelar filerna i `docs/media/ljud` direkt.
 
 ## Publicering
 
-Push till `main` publicerar direkt. `CNAME` innehåller `agatrion.se`; DNS pekar apex med
-A/AAAA till GitHubs adresser och `www` via CNAME till `teyrow.github.io`.
+Push till `main` publicerar direkt, från mappen `docs/`. `docs/CNAME` innehåller
+`agatrion.se`; DNS pekar apex med A/AAAA till GitHubs adresser och `www` via CNAME till
+`teyrow.github.io`.
 
-Kontrollera lokalt före push:
+Kontrollera lokalt före push — servern ska stå i `docs`, annars stämmer inte de absoluta
+sökvägarna:
 
 ```
-python3 -m http.server 8000
+cd docs && python3 -m http.server 8000
 ```

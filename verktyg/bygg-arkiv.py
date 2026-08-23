@@ -28,7 +28,9 @@ import wave
 import numpy as np
 
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROT, "media", "ljud")
+# sajten ligger i docs/ — allt utanför den mappen publiceras aldrig
+SAJT = os.path.join(ROT, "docs")
+OUT = os.path.join(SAJT, "media", "ljud")
 TMP = "/tmp/agatrion-arkiv"
 AM = os.path.expanduser("~/Music/Music/Media.localized/Music/AGA-trion")
 TS = "/Users/aj/tempschumann"
@@ -381,7 +383,7 @@ def skriv_sida():
     delar.append("    </div>\n  </section>\n\n")
     delar.append(FOT)
 
-    with open(os.path.join(ROT, "arkiv.html"), "w") as fh:
+    with open(os.path.join(SAJT, "arkiv.html"), "w") as fh:
         fh.write("".join(delar))
     print("arkiv.html skriven — %d konserter, %d spår"
           % (len(poster), sum(len(p[4]) for p in poster)))

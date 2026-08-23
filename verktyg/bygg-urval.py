@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """Bygg den lokala urvalssidan: lyssna igenom allt och bekräfta vilket verk det är.
 
-Sidan hamnar i <repo>/urval/index.html (gitignorerad) och spelar upp filerna i
-media/ljud direkt, så starta den lokala servern och gå till
+Sidan hamnar i docs/urval/index.html (gitignorerad) och spelar upp filerna i
+docs/media/ljud direkt, så starta den lokala servern och gå till
 
-    python3 -m http.server 8000
+    cd docs && python3 -m http.server 8000
     http://localhost:8000/urval/
 
 För varje spår finns en kryssruta (ska det upp på lyssnasidan?), en rullgardin
@@ -27,7 +27,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import verk                                                    # noqa: E402
 
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-UT = os.path.join(ROT, "urval")
+# sajten ligger i docs/ — allt utanför den mappen publiceras aldrig
+SAJT = os.path.join(ROT, "docs")
+UT = os.path.join(SAJT, "urval")
 KROMA = os.path.join(ROT, "verktyg", ".kroma")
 TROSKEL = 0.25             # kalibrerad mot de 124 kända paren, se jamfor-inspelningar.py
 
@@ -100,7 +102,7 @@ def skriv_sida():
     tid = langder()
     slakt = slaktingar()
     filer = {}
-    for f in sorted(glob.glob(os.path.join(ROT, "media", "ljud", "*", "*.mp3"))):
+    for f in sorted(glob.glob(os.path.join(SAJT, "media", "ljud", "*", "*.mp3"))):
         konsert = os.path.basename(os.path.dirname(f))
         filer.setdefault(konsert, []).append(os.path.basename(f))
 

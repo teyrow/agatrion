@@ -35,6 +35,8 @@ import wave
 import numpy as np
 
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sajten ligger i docs/ — allt utanför den mappen publiceras aldrig
+SAJT = os.path.join(ROT, "docs")
 KROMA = os.path.join(ROT, "verktyg", ".kroma")
 N, HOP, SR = 4096, 2048, 11025
 RAMAR_PER_SEK = SR / HOP          # ~5,4
@@ -79,7 +81,7 @@ def kroma(x):
 
 def rakna_drag():
     os.makedirs(KROMA, exist_ok=True)
-    filer = sorted(glob.glob(os.path.join(ROT, "media", "ljud", "*", "*.mp3")))
+    filer = sorted(glob.glob(os.path.join(SAJT, "media", "ljud", "*", "*.mp3")))
     for i, mp3 in enumerate(filer, 1):
         namn = "%s__%s" % (os.path.basename(os.path.dirname(mp3)), os.path.basename(mp3)[:-4])
         mål = os.path.join(KROMA, namn + ".npz")

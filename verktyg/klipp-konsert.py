@@ -15,7 +15,9 @@ import numpy as np
 
 # Källinspelningarna ligger utanför repot — de är för stora för git.
 SRC = os.environ.get("AGATRION_SOURCES", "/Users/aj/code/music-convert/sources")
-OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "media", "ljud")
+# sajten ligger i docs/ — allt utanför den mappen publiceras aldrig
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                   "docs", "media", "ljud")
 TARGET_PEAK = 10 ** (-1.5 / 20)  # -1,5 dBFS
 CHUNK_SEC = 20
 

@@ -41,11 +41,12 @@ VERK = {
         tonsattare="Joseph Haydn", titel="Pianotrio i C-dur", satser=[],
         fragor="Vilket Hob-nummer? Hob. XV:27 \u00e4r den vanligaste C-durtrion."),
     "haydn-g": dict(
-        tonsattare="Joseph Haydn", titel="Pianotrio i G-dur", satser=[],
-        fragor="Hob. XV:25 \u00e4r den vanligaste G-durtrion (med Rondo all\u2019Ongarese)."),
-    "mendelssohn-trio": dict(
-        tonsattare="Felix Mendelssohn", titel="Pianotrio", satser=[],
-        fragor="Nr 1 i d-moll, op. 49, eller nr 2 i c-moll, op. 66?"),
+        tonsattare="Joseph Haydn", titel="Pianotrio nr 39 i G-dur, Hob. XV:25",
+        satser=["Andante", "Poco adagio. Cantabile", "Rondo all\u2019Ongarese. Presto"]),
+    "mendelssohn-op49": dict(
+        tonsattare="Felix Mendelssohn", titel="Pianotrio nr 1 i d-moll, op. 49",
+        satser=["Molto allegro ed agitato", "Andante con moto tranquillo",
+                "Scherzo. Leggiero e vivace", "Finale. Allegro assai appassionato"]),
     "gliere-op39": dict(
         tonsattare="Reinhold Gli\u00e8re", titel="\u00c5tta duetter f\u00f6r violin och cello, op. 39",
         satser=["Preludium", "Gavott", "Vaggvisa", "Canzonetta",
@@ -55,7 +56,9 @@ VERK = {
         fotnot="Nr 1 ur Trio-miniatyrer"),
     "bridge-meditation": dict(
         tonsattare="Frank Bridge", titel="Meditation", satser=[],
-        fotnot="Nr 1 ur Fyra korta stycken, H 104"),
+        fotnot="Nr 1 ur Fyra korta stycken, H 104",
+        fragor="De fem inspelningar som heter Meditation respektive Romance \u00e4r samma "
+               "musik enligt ljudj\u00e4mf\u00f6relsen \u2014 den ena etiketten \u00e4r fel."),
     "bridge-romance": dict(
         tonsattare="Frank Bridge", titel="Romance", satser=[],
         fotnot="Nr 4 ur Miniatyrer f\u00f6r pianotrio"),
@@ -70,7 +73,8 @@ VERK = {
         fotnot="Arrangemang f\u00f6r pianotrio av G\u00f6sta Nylund"),
     "oblivion": dict(tonsattare="Astor Piazzolla", titel="Oblivion", satser=[]),
     "schindler": dict(
-        tonsattare="John Williams", titel="Tema ur Schindler\u2019s List", satser=[]),
+        tonsattare="John Williams", titel="Tema ur Schindler\u2019s List", satser=[],
+        fotnot="Arrangemang f\u00f6r pianotrio av G\u00f6sta Nylund"),
     "saint-saens-op43": dict(
         tonsattare="Camille Saint-Sa\u00ebns", titel="Allegro appassionato, op. 43", satser=[],
         fotnot="F\u00f6r cello och piano"),
@@ -80,10 +84,10 @@ VERK = {
     "mendelssohn-preludium": dict(
         tonsattare="Felix Mendelssohn", titel="Preludium och fuga i f-moll", satser=[],
         fragor="Sannolikt op. 35 nr 5 f\u00f6r piano \u2014 bekr\u00e4fta."),
-    "schubert-?": dict(
-        tonsattare="Franz Schubert", titel="FYLL I", satser=[],
-        fragor="Vilket verk spelades i Tran\u00e5s 7 mars 2026? Repertoarsidan anger "
-               "Andante ur pianotrion i B-dur."),
+    "schubert-d898": dict(
+        tonsattare="Franz Schubert", titel="Pianotrio nr 1 i B-dur, D 898",
+        satser=["Allegro moderato", "Andante un poco mosso",
+                "Scherzo. Allegro", "Rondo. Allegro vivace"]),
 }
 
 
@@ -117,14 +121,14 @@ SPAR = {
     "brannestad-2024/07-amanda-maier-rontgen-andante.mp3":            ("maier-ess", 3, "belagd"),
     "brannestad-2024/08-amanda-maier-rontgen-finale-allegro-con-fuoco.mp3": ("maier-ess", 4, "belagd"),
     "brannestad-2024/09-cecile-chaminade-andante-ur-pianotrio-nr-1.mp3": ("chaminade-op11", 2, "belagd"),
-    "ekeby-2023/01-mendelsohn.mp3":                                   ("mendelssohn-trio", 0, "gissning"),
+    "ekeby-2023/01-mendelsohn.mp3":                                   ("mendelssohn-op49", 2, "belagd"),
     "ekeby-2023/02-sang-till-lotta.mp3":                              ("lotta", 0, "belagd"),
-    "ekeby-2023/03-bridge.mp3":                                       ("bridge-meditation", 0, "gissning"),
-    "ekeby-2023/04-piazolla.mp3":                                     ("oblivion", 0, "analys"),
-    "ekeby-2023/05-haydn.mp3":                                        ("haydn-c", 0, "gissning"),
+    "ekeby-2023/03-bridge.mp3":                                       ("bridge-meditation", 0, "belagd"),
+    "ekeby-2023/04-piazolla.mp3":                                     ("oblivion", 0, "belagd"),
+    "ekeby-2023/05-haydn.mp3":                                        ("haydn-g", 2, "analys"),
     "ekeby-2023/06-schindler-s-list.mp3":                             ("schindler", 0, "belagd"),
-    "ekeby-2023/07-chaminade.mp3":                                    ("chaminade-op11", 2, "analys"),
-    "ekeby-2023/08-haydn-ii.mp3":                                     ("haydn-c", 0, "gissning"),
+    "ekeby-2023/07-chaminade.mp3":                                    ("chaminade-op11", 2, "belagd"),
+    "ekeby-2023/08-haydn-ii.mp3":                                     ("haydn-g", 1, "belagd"),
     "landeryd-2022/01-sehr-lebhaft.mp3":                              ("schumann-op80", 1, "belagd"),
     "landeryd-2022/02-mit-innigem-ausdruck-lebhaft.mp3":              ("schumann-op80", 2, "belagd"),
     "landeryd-2022/03-prelude.mp3":                                   ("gliere-op39", 1, "analys"),
@@ -149,7 +153,7 @@ SPAR = {
     "rassnas-2023/02-frank-bridge-meditation.mp3":                    ("bridge-meditation", 0, "belagd"),
     "rassnas-2023/03-astor-piazzolla-oblivion.mp3":                   ("oblivion", 0, "belagd"),
     "rassnas-2023/04-jan-sandstrom-sang-till-lotta.mp3":              ("lotta", 0, "belagd"),
-    "rassnas-2023/05-felix-mendelssohn-pianotrio-tredje-satsen.mp3":  ("mendelssohn-trio", 3, "belagd"),
+    "rassnas-2023/05-felix-mendelssohn-pianotrio-tredje-satsen.mp3":  ("mendelssohn-op49", 2, "belagd"),
     "skanninge-2024/01-sehr-lebhaft.mp3":                             ("schumann-op80", 1, "belagd"),
     "skanninge-2024/02-mit-innigem-ausdruck-lebhaft.mp3":             ("schumann-op80", 2, "belagd"),
     "skanninge-2024/03-in-massiger-bewegung.mp3":                     ("schumann-op80", 3, "belagd"),
@@ -162,8 +166,8 @@ SPAR = {
     "tranas-2024/05-clara-schumann-allegretto.mp3":                   ("clara-op17", 4, "belagd"),
     "tranas-2024/06-cecile-chaminade-andante-ur-pianotrio-nr-1.mp3":  ("chaminade-op11", 2, "belagd"),
     "tranas-2024/07-jan-sandstrom-sang-till-lotta.mp3":               ("lotta", 0, "belagd"),
-    "tranas-2026/01-franz-schubert-schubert.mp3":                     ("schubert-?", 0, "gissning"),
-    "tranas-2026/02-felix-mendelssohn-mendelssohn.mp3":               ("mendelssohn-trio", 0, "gissning"),
+    "tranas-2026/01-franz-schubert-schubert.mp3":                     ("schubert-d898", 2, "belagd"),
+    "tranas-2026/02-felix-mendelssohn-mendelssohn.mp3":               ("mendelssohn-op49", 2, "belagd"),
     "tranas-2026/03-clara-schumann-clara-schumann.mp3":               ("clara-op17", 3, "analys"),
     "tranas-2026/04-reinhold-gliere-vaggvisa.mp3":                    ("gliere-op39", 3, "belagd"),
     "tranas-2026/05-reinhold-gliere-canzonetta.mp3":                  ("gliere-op39", 4, "belagd"),

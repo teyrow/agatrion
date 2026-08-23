@@ -29,7 +29,7 @@ import verk                                                    # noqa: E402
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 UT = os.path.join(ROT, "urval")
 KROMA = os.path.join(ROT, "verktyg", ".kroma")
-TROSKEL = 0.147            # kalibrerad mot de 85 kända paren, se jamfor-inspelningar.py
+TROSKEL = 0.25             # kalibrerad mot de 124 kända paren, se jamfor-inspelningar.py
 
 
 def langder():

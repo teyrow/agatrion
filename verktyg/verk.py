@@ -82,7 +82,7 @@ VERK = {
         fotnot="F\u00f6r cello och piano"),
     "koch-variationer": dict(
         tonsattare="Erland von Koch",
-        titel="Sju variationer \u00f6ver \u201eJag vet en dejlig rosa\u201d", satser=[]),
+        titel="Sju variationer \u00f6ver \u201dJag vet en dejlig rosa\u201d", satser=[]),
     "mendelssohn-preludium": dict(
         tonsattare="Felix Mendelssohn", titel="Preludium och fuga i f-moll", satser=[],
         fragor="Sannolikt op. 35 nr 5 f\u00f6r piano \u2014 bekr\u00e4fta."),
@@ -210,6 +210,29 @@ KONSERTER = {
     "bjarka-saby-2021": ("Nya Slottet Bj\u00e4rka-S\u00e4by", "22 juli 2021", "arkiv"),
     "lillkyrkan-2021": ("Lillkyrkan, Motala", "18 juli 2021", "arkiv"),
 }
+
+
+# ------------------------------------------------------------------- urvalet
+# Vilken inspelning ett verk ska länkas till från repertoarsidan. Nyckeln är
+# "verk:sats" — samma sträng som rullgardinerna på urvalssidan använder.
+# Ligger inspelningen inte på lyssnasidan hamnar den under "Enstaka stycken"
+# där, så att repertoarlänkarna aldrig pekar in i det olänkade arkivet.
+VAL = {
+    "schubert-d898:2": "tranas-2026/01-franz-schubert-schubert.mp3",
+    "mendelssohn-op49:2": "tranas-2026/02-felix-mendelssohn-mendelssohn.mp3",
+    "schindler:0": "tranas-2026/08-john-williams-tema-ur-schindler-s-list.mp3",
+    "bridge-romance:0":
+        "bjarka-saby-2022/01-romance-ur-3-miniatyrer-for-pianotrio-av-frank-bridge.mp3",
+    "koch-variationer:0":
+        "bjarka-saby-2022/02-sju-variationer-over-jag-vet-en-dejlig-rosa-av-erland-von-ko.mp3",
+    "gliere-op39:1": "landeryd-2022/03-prelude.mp3",
+    "gliere-op39:3": "landeryd-2022/04-cradle-song.mp3",
+}
+
+
+def ankare(nyckel):
+    """"gliere-op39:3" -> "v-gliere-op39-3", id:t repertoarsidan länkar till."""
+    return "v-" + nyckel.replace(":", "-")
 
 
 def uppgift(fil):

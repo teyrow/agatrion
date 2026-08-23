@@ -12,6 +12,10 @@ spår pekar på och byter ut rubrikerna — allt annat på sidorna lämnas ifred
 Lyssnasidan grupperar per verk, med tonsättare och verk i mellanrubriken och
 satserna som spårrader. Arkivsidan är en rak lista, så där står verket på varje
 rad. Spår vars verk ännu inte är bekräftat får en kommentar med FYLL I intill.
+
+Skriptet sätter också id på de inspelningar som är utvalda i verk.VAL, så att
+repertoarsidan kan länka till dem, och bygger avsnittet "Enstaka stycken" på
+lyssnasidan för de utvalda som annars bara finns i arkivet.
 """
 import html
 import os
@@ -23,7 +27,10 @@ import verk                                                    # noqa: E402
 
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # kommentaren mellan <li> och <p> är vår egen FYLL I-markering från förra körningen
-SPAR_RE = re.compile(r'<li>\s*(?:<!--.*?-->\s*)*<p class="track-title">(.*?)</p>\s*'
+# <li> kan bära ett id från förra körningen, och kommentaren mellan <li> och <p>
+# är vår egen FYLL I-markering — båda måste mönstret släppa igenom, annars läser
+# vi färre spår än blocket innehåller och spärren i skriv_om() slår till
+SPAR_RE = re.compile(r'<li(?:\s[^>]*)?>\s*(?:<!--.*?-->\s*)*<p class="track-title">(.*?)</p>\s*'
                      r'(<audio[^>]*src="([^"]*)"[^>]*></audio>)\s*</li>', re.S)
 TID_RE = re.compile(r'<span class="duration">([^<]*)</span>')
 
@@ -47,6 +54,14 @@ def spar_i(block):
 OKAND = "FYLL I"
 
 
+def valt_ankare(fil):
+    """id:t om den här inspelningen är den repertoarsidan ska länka till."""
+    for nyckel, vald in verk.VAL.items():
+        if vald == fil:
+            return verk.ankare(nyckel)
+    return None
+
+
 def rad(spar, visa_verk, indrag):
     u = verk.uppgift(spar["fil"])
     if not u:
@@ -65,7 +80,8 @@ def rad(spar, visa_verk, indrag):
     if visa_verk:
         delar.append('<span class="composer">%s</span>' % html.escape(tonsattare))
     i = " " * indrag
-    rader = ["%s<li>" % i]
+    ank = valt_ankare(spar["fil"])
+    rader = ['%s<li%s>' % (i, ' id="%s"' % ank if ank else "")]
     if saker == "gissning":
         rader.append("%s  <!-- FYLL I: vilket verk är det h\u00e4r? Bekr\u00e4fta genom att "
                      "lyssna, se verktyg/bygg-urval.py -->" % i)
@@ -108,6 +124,62 @@ def bygg_platt(spar, indrag):
     return "\n".join(ut)
 
 
+ENSTAKA_START = "  <!-- enstaka:start -->"
+ENSTAKA_SLUT = "  <!-- enstaka:slut -->"
+
+
+def bygg_enstaka(bas):
+    """Avsnittet med de utvalda inspelningar som inte finns på lyssnasidan ändå."""
+    poster = []
+    for nyckel, fil in verk.VAL.items():
+        konsert = fil.split("/")[0]
+        if verk.KONSERTER[konsert][2] == "lyssna":
+            continue
+        tonsattare, titel, sats, _ = verk.uppgift(fil)
+        poster.append((tonsattare, titel, sats, nyckel, fil, konsert))
+    if not poster:
+        return ""
+    poster.sort(key=lambda p: (p[0].split()[-1], p[1], p[2]))
+    ut = [ENSTAKA_START,
+          '  <section class="section" id="enstaka">',
+          '    <div class="wrap">',
+          "      <h2>Enstaka stycken</h2>",
+          '      <p class="section-lead prose">Ur konserter vi inte lagt upp i sin helhet.</p>',
+          '      <ol class="tracks">']
+    for tonsattare, titel, sats, nyckel, fil, konsert in poster:
+        plats, datum, _ = verk.KONSERTER[konsert]
+        namn = html.escape(titel)
+        if sats:
+            namn += ' <span class="movement">%s</span>' % html.escape(sats)
+        ut += ['        <li id="%s">' % verk.ankare(nyckel),
+               '          <p class="track-title">%s <span class="composer">%s</span></p>'
+               % (namn, html.escape(tonsattare)),
+               '          <p class="recording-meta">%s, %s</p>'
+               % (html.escape(plats), html.escape(datum)),
+               '          <audio controls preload="none" src="%s/ljud/%s"></audio>'
+               % (bas, html.escape(fil)),
+               "        </li>"]
+    ut += ["      </ol>", "    </div>", "  </section>", ENSTAKA_SLUT]
+    return "\n".join(ut)
+
+
+def satt_enstaka(s):
+    """Byt ut avsnittet, eller lägg in det efter liveinspelningarna första gången."""
+    m = re.search(r'src="(.*?)/ljud/', s)
+    if not m:
+        return s
+    nytt = bygg_enstaka(m.group(1))
+    if ENSTAKA_START in s:
+        i = s.index(ENSTAKA_START)
+        j = s.index(ENSTAKA_SLUT) + len(ENSTAKA_SLUT)
+        return s[:i] + nytt + s[j:]
+    # direkt före SoundCloud-notisen, som avslutar inspelningsdelen
+    märke = '  <section class="section">\n    <div class="wrap">\n      <p class="recording-meta">Äldre'
+    if märke not in s:
+        raise SystemExit("hittade inte var avsnittet Enstaka stycken ska in")
+    return s.replace(märke, nytt + "\n\n" + märke, 1)
+
+
 def skriv_om(sidnamn, grupperat, test):
     bana = os.path.join(ROT, sidnamn)
     s = original = open(bana, encoding="utf-8").read()
@@ -136,6 +208,8 @@ def skriv_om(sidnamn, grupperat, test):
         if ny != artikel:
             s = s.replace(artikel, ny)
             ändrade += 1
+    if grupperat:
+        s = satt_enstaka(s)
     if test:
         print("%s: %d block skulle skrivas om" % (sidnamn, ändrade))
     elif s != original:

@@ -183,6 +183,13 @@ h3 .years { font-family: var(--sans); font-size: .8rem; font-weight: 400; color:
 .repertoire li { padding: .3rem 0; border-bottom: 1px solid var(--rule); }
 .repertoire li:last-child { border-bottom: 0; }
 .repertoire .movements { display: block; font-size: .88rem; color: var(--muted); }
+/* länk till den inspelning vi valt som verkets exempel, se verk.VAL */
+.repertoire a.lyssna { font-family: var(--sans); font-size: .8rem; white-space: nowrap;
+  text-decoration: none; border-bottom: 1px solid currentColor; }
+.repertoire a.lyssna::before { content: "\25B8\00A0"; border: 0; }
+/* markera spåret man hoppat till från repertoarsidan */
+.tracks li:target { background: var(--accent-soft, rgba(127,127,127,.12));
+  box-shadow: 0 0 0 .6rem var(--accent-soft, rgba(127,127,127,.12)); border-radius: 2px; }
 
 /* --- Lyssna --- */
 

@@ -135,18 +135,6 @@ h1 + h2 { margin-top: 2rem; }
 .members li { padding: .15rem 0; }
 /* samma omvända anfang som under Musikerna, men i radhöjd — namn och instrument
    ryms på en rad, så bokstaven ska inte flyta utan sitta med i texten */
-/* AGA i rubriken: tre egna rutor med luft emellan, sedan -trion i vanlig text */
-.anfang.rubrik {
-  float: none;
-  font-size: .82em;
-  min-width: 1.1em;
-  padding: .1em .06em .04em;
-  margin: 0 .09em 0 0;
-  vertical-align: .04em;
-  border-radius: 4px;
-}
-.anfang.rubrik:last-of-type { margin-right: .14em; }
-
 .anfang.liten {
   float: none;
   font-size: 1.3em;

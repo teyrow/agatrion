@@ -30,10 +30,10 @@ VERK = {
         tonsattare="Robert Schumann", titel="Pianotrio nr 2 i F-dur, op. 80",
         satser=["Sehr lebhaft", "Mit innigem Ausdruck \u2013 Lebhaft",
                 "In m\u00e4ssiger Bewegung", "Nicht zu rasch"]),
-    "schumann-op88": dict(
-        tonsattare="Robert Schumann", titel="Fantasiest\u00fccke, op. 88",
-        satser=["Romanze", "Humoreske", "Duett", "Finale"],
-        fragor="Bara en sats spelades (knappt fyra minuter) \u2014 vilken?"),
+    "schumann-op73": dict(
+        tonsattare="Robert Schumann", titel="Fantasiest\u00fccke, op. 73",
+        satser=["Zart und mit Ausdruck", "Lebhaft, leicht", "Rasch und mit Feuer"],
+        fotnot="F\u00f6r cello och piano"),
     "chaminade-op11": dict(
         tonsattare="C\u00e9cile Chaminade", titel="Pianotrio nr 1 i g-moll, op. 11",
         satser=["Allegro", "Andante", "Scherzo", "Finale"]),
@@ -99,7 +99,7 @@ SPAR = {
     "bjarka-saby-2021/01-joseph-haydn-pianotrio-i-c-dur.mp3":         ("haydn-c", 0, "belagd"),
     "bjarka-saby-2021/02-wilhelm-peterson-berger-sommarsang.mp3":     ("pb-sommarsang", 0, "belagd"),
     "bjarka-saby-2021/03-wilhelm-peterson-berger-lawn-tennis.mp3":    ("pb-lawn-tennis", 0, "belagd"),
-    "bjarka-saby-2021/04-robert-schumann-fantasiestucke.mp3":         ("schumann-op88", 0, "gissning"),
+    "bjarka-saby-2021/04-robert-schumann-fantasiestucke.mp3":         ("schumann-op73", 1, "belagd"),
     "bjarka-saby-2021/05-frank-bridge-meditation.mp3":                ("bridge-romance", 0, "belagd"),
     "bjarka-saby-2021/06-amanda-maier-rontgen-pianotrio-i-ess-dur.mp3": ("maier-ess", 0, "belagd"),
     "bjarka-saby-2021/07-jan-sandstrom-sang-till-lotta.mp3":          ("lotta", 0, "belagd"),
@@ -143,7 +143,7 @@ SPAR = {
     "lillkyrkan-2021/01-joseph-haydn-pianotrio-i-c-dur.mp3":          ("haydn-c", 0, "belagd"),
     "lillkyrkan-2021/02-wilhelm-peterson-berger-sommarsang.mp3":      ("pb-sommarsang", 0, "belagd"),
     "lillkyrkan-2021/03-wilhelm-peterson-berger-lawn-tennis.mp3":     ("pb-lawn-tennis", 0, "belagd"),
-    "lillkyrkan-2021/04-robert-schumann-fantasiestucke.mp3":          ("schumann-op88", 0, "gissning"),
+    "lillkyrkan-2021/04-robert-schumann-fantasiestucke.mp3":          ("schumann-op73", 1, "belagd"),
     "lillkyrkan-2021/05-frank-bridge-meditation.mp3":                 ("bridge-romance", 0, "belagd"),
     "lillkyrkan-2021/06-amanda-maier-rontgen-pianotrio-i-ess-dur.mp3": ("maier-ess", 1, "analys"),
     "lillkyrkan-2021/07-jan-sandstrom-sang-till-lotta.mp3":           ("lotta", 0, "belagd"),

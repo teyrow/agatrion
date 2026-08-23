@@ -56,9 +56,11 @@ VERK = {
         fotnot="Nr 1 ur Trio-miniatyrer"),
     "bridge-meditation": dict(
         tonsattare="Frank Bridge", titel="Meditation", satser=[],
-        fotnot="Nr 1 ur Fyra korta stycken, H 104",
-        fragor="De fem inspelningar som heter Meditation respektive Romance \u00e4r samma "
-               "musik enligt ljudj\u00e4mf\u00f6relsen \u2014 den ena etiketten \u00e4r fel."),
+        fotnot="Nr 1 ur Fyra korta stycken, H 104"),
+    # Ingen inspelning \u00e4r Meditation. Sex spår hette det eller Romance om vartannat;
+    # ljudj\u00e4mf\u00f6relsen visade att alla sex \u00e4r samma musik, och Andreas har avgjort
+    # att det \u00e4r Romance. Filnamnen under media/ljud s\u00e4ger fortfarande "meditation" på
+    # fyra av dem \u2014 de r\u00f6rs inte, eftersom filerna cachas ett \u00e5r på sina URL:er.
     "bridge-romance": dict(
         tonsattare="Frank Bridge", titel="Romance", satser=[],
         fotnot="Nr 4 ur Miniatyrer f\u00f6r pianotrio"),
@@ -98,7 +100,7 @@ SPAR = {
     "bjarka-saby-2021/02-wilhelm-peterson-berger-sommarsang.mp3":     ("pb-sommarsang", 0, "belagd"),
     "bjarka-saby-2021/03-wilhelm-peterson-berger-lawn-tennis.mp3":    ("pb-lawn-tennis", 0, "belagd"),
     "bjarka-saby-2021/04-robert-schumann-fantasiestucke.mp3":         ("schumann-op88", 0, "gissning"),
-    "bjarka-saby-2021/05-frank-bridge-meditation.mp3":                ("bridge-meditation", 0, "belagd"),
+    "bjarka-saby-2021/05-frank-bridge-meditation.mp3":                ("bridge-romance", 0, "belagd"),
     "bjarka-saby-2021/06-amanda-maier-rontgen-pianotrio-i-ess-dur.mp3": ("maier-ess", 0, "belagd"),
     "bjarka-saby-2021/07-jan-sandstrom-sang-till-lotta.mp3":          ("lotta", 0, "belagd"),
     "bjarka-saby-2022/01-romance-ur-3-miniatyrer-for-pianotrio-av-frank-bridge.mp3": ("bridge-romance", 0, "belagd"),
@@ -123,7 +125,7 @@ SPAR = {
     "brannestad-2024/09-cecile-chaminade-andante-ur-pianotrio-nr-1.mp3": ("chaminade-op11", 2, "belagd"),
     "ekeby-2023/01-mendelsohn.mp3":                                   ("mendelssohn-op49", 2, "belagd"),
     "ekeby-2023/02-sang-till-lotta.mp3":                              ("lotta", 0, "belagd"),
-    "ekeby-2023/03-bridge.mp3":                                       ("bridge-meditation", 0, "belagd"),
+    "ekeby-2023/03-bridge.mp3":                                       ("bridge-romance", 0, "belagd"),
     "ekeby-2023/04-piazolla.mp3":                                     ("oblivion", 0, "belagd"),
     "ekeby-2023/05-haydn.mp3":                                        ("haydn-g", 2, "analys"),
     "ekeby-2023/06-schindler-s-list.mp3":                             ("schindler", 0, "belagd"),
@@ -142,7 +144,7 @@ SPAR = {
     "lillkyrkan-2021/02-wilhelm-peterson-berger-sommarsang.mp3":      ("pb-sommarsang", 0, "belagd"),
     "lillkyrkan-2021/03-wilhelm-peterson-berger-lawn-tennis.mp3":     ("pb-lawn-tennis", 0, "belagd"),
     "lillkyrkan-2021/04-robert-schumann-fantasiestucke.mp3":          ("schumann-op88", 0, "gissning"),
-    "lillkyrkan-2021/05-frank-bridge-meditation.mp3":                 ("bridge-meditation", 0, "belagd"),
+    "lillkyrkan-2021/05-frank-bridge-meditation.mp3":                 ("bridge-romance", 0, "belagd"),
     "lillkyrkan-2021/06-amanda-maier-rontgen-pianotrio-i-ess-dur.mp3": ("maier-ess", 1, "analys"),
     "lillkyrkan-2021/07-jan-sandstrom-sang-till-lotta.mp3":           ("lotta", 0, "belagd"),
     "motala-2022/01-robert-schumann-sehr-lebhaft.mp3":                ("schumann-op80", 1, "belagd"),
@@ -150,7 +152,7 @@ SPAR = {
     "motala-2022/03-robert-schumann-in-massiger-bewegung.mp3":        ("schumann-op80", 3, "belagd"),
     "motala-2022/04-robert-schumann-nicht-zu-rasch.mp3":              ("schumann-op80", 4, "belagd"),
     "rassnas-2023/01-joseph-haydn-pianotrio-i-g-dur.mp3":             ("haydn-g", 0, "belagd"),
-    "rassnas-2023/02-frank-bridge-meditation.mp3":                    ("bridge-meditation", 0, "belagd"),
+    "rassnas-2023/02-frank-bridge-meditation.mp3":                    ("bridge-romance", 0, "belagd"),
     "rassnas-2023/03-astor-piazzolla-oblivion.mp3":                   ("oblivion", 0, "belagd"),
     "rassnas-2023/04-jan-sandstrom-sang-till-lotta.mp3":              ("lotta", 0, "belagd"),
     "rassnas-2023/05-felix-mendelssohn-pianotrio-tredje-satsen.mp3":  ("mendelssohn-op49", 2, "belagd"),

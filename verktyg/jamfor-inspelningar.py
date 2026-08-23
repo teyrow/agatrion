@@ -20,10 +20,9 @@ Jämförelsen görs på två sätt:
   * ett kort spår söks som delsträcka i ett långt, vilket hittar enskilda satser
     inuti en hel trio som spelats in i ett stycke
 
-Mätt mot de 124 par vi känner till hittar 0,25 som gräns 123 av dem, och enda
-gången den säger fel är om Frank Bridges Meditation och Romance — de två är
-samma musik i våra inspelningar, så där är det etiketterna som är oense, inte
-mätningen.
+Mätt mot de 124 par vi känner till hittar 0,25 som gräns 123 av dem, utan att
+para ihop något som inte hör ihop. Det var så vi upptäckte att de sex spår som
+hette Meditation respektive Romance om vartannat allihop är Bridges Romance.
 """
 import argparse
 import glob

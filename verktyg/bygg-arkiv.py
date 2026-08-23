@@ -117,6 +117,21 @@ FARDIGA_MP3 = [
       ("05-Mendelsohn sats 3 Pianotrio.mp3", "Pianotrio, tredje satsen", "Felix Mendelssohn")]),
 ]
 
+# Konserter som redan är kodade sedan tidigare — de låg bara på lyssnasidan, som
+# numera visar ett urval per verk i stället för hela konserter. Spårtitlarna
+# sätts av satt-verktitlar.py, så här behövs bara plats, datum och ingress.
+REDAN_KODADE = [
+    ("tranas-2026", "Tranås kyrka", "7 mars 2026",
+     "Fastemusik — meditativa toner. De långsamma satserna ur tre pianotrior, "
+     "därefter Glière, Juon, Chaminade och John Williams."),
+    ("brannestad-2024", "Brännestad musikateljé, Huaröd", "10 november 2024",
+     "En temadag med kvinnliga tonsättare hemma hos Tomas och Tove på Linderödsåsen: "
+     "Clara Schumanns och Amanda Maier-Röntgens pianotrior, med Chaminade som extranummer."),
+    ("tranas-2024", "Tranås kyrka", "3 november 2024",
+     "Amanda Maier-Röntgen och Clara Schumanns pianotrior, med Chaminade och "
+     "Sång till Lotta som avslutning."),
+]
+
 VIDEO = [
     ("ekebyborna-2021", "Ekebyborna hembygdsgård", "17 juli 2021",
      "Tre telefonklipp från sommarspelningen inomhus, i full HD.",
@@ -292,10 +307,11 @@ HUVUD = '''<!DOCTYPE html>
   <section class="section" style="border-top:0">
     <div class="wrap">
       <h1>Arkiv</h1>
-      <p class="section-lead prose">Inspelningar som inte ligger på lyssnasidan. Sidan är inte
-      länkad från menyn och inte sökbar — den finns för er egen skull, och för den ni väljer att
-      ge adressen till. Ljudet kommer från Apple Music-arkivet, Audacity-projekten och de
-      färdigklippta spåren; kvaliteten varierar därefter.</p>
+      <p class="section-lead prose">Allt vi har, konsert för konsert och spår för spår.
+      Lyssnasidan visar ett verk i taget; här ligger hela kvällarna. Sidan är inte länkad från
+      menyn och inte sökbar — den finns för er egen skull, och för den ni väljer att ge adressen
+      till. Ljudet kommer från Apple Music-arkivet, Audacity-projekten och de färdigklippta
+      spåren; kvaliteten varierar därefter.</p>
     </div>
   </section>
 
@@ -331,6 +347,11 @@ def skriv_sida():
                        [(t, "") for _, _, t in parse_labels(etiketter)]))
     for s, plats, datum, ingress, _, spar in FARDIGA_MP3:
         poster.append((datum, s, plats, ingress, [(t, k) for _, t, k in spar]))
+    for s, plats, datum, ingress in REDAN_KODADE:
+        mapp = os.path.join(OUT, s)
+        antal = len([f for f in os.listdir(mapp) if f.endswith(".mp3")]) \
+            if os.path.isdir(mapp) else 0
+        poster.append((datum, s, plats, ingress, [("", "")] * antal))
 
     MANADER = ["januari", "februari", "mars", "april", "maj", "juni", "juli",
                "augusti", "september", "oktober", "november", "december"]

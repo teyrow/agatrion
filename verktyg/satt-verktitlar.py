@@ -123,12 +123,14 @@ ENSTAKA_SLUT = "  <!-- enstaka:slut -->"
 
 
 def bygg_enstaka(bas):
-    """Avsnittet med valda inspelningar ur konserter som inte ligger uppe i sin helhet."""
+    """Lyssnasidans enda innehållsavsnitt: en inspelning per verk.
+
+    Urvalet står i verk.VAL. Hela konserter hör hemma i arkivet — den här sidan
+    ska svara på frågan "hur låter det verket", inte "vad spelade de den kvällen".
+    """
     poster = []
     for fil in verk.VAL:
         konsert = fil.split("/")[0]
-        if verk.KONSERTER[konsert][2] == "lyssna":
-            continue
         vid, sats, _ = verk.SPAR[fil]
         poster.append((vid, konsert, sats, fil))
     if not poster:
@@ -143,11 +145,11 @@ def bygg_enstaka(bas):
         return (v["tonsattare"].split()[-1], v["titel"], konsert)
 
     ut = [ENSTAKA_START,
-          '  <section class="section" id="enstaka">',
+          '  <section class="section" id="inspelningar">',
           '    <div class="wrap">',
-          "      <h2>Ur andra konserter</h2>",
-          '      <p class="section-lead prose">Enskilda verk ur konserter som inte ligger '
-          "uppe i sin helhet.</p>"]
+          "      <h2>Inspelningar</h2>",
+          '      <p class="section-lead prose">Ett verk i taget, i den inspelning vi tycker '
+          "bäst om. Under varje rubrik står var och när den gjordes.</p>"]
     for nyckel in sorted(grupper, key=sortnyckel):
         vid, konsert = nyckel
         v = verk.VERK[vid]
@@ -174,12 +176,19 @@ def bygg_enstaka(bas):
     return "\n".join(ut)
 
 
+def mediabas(s):
+    """Var ljudet ligger. Lyssnasidan kan sakna ljudlänkar just när avsnittet är
+    urlyft, så arkivet får svara i andra hand."""
+    for text in (s, open(os.path.join(SAJT, "arkiv.html"), encoding="utf-8").read()):
+        m = re.search(r'src="(https?://[^"]*?)/ljud/', text)
+        if m:
+            return m.group(1)
+    raise SystemExit("hittade ingen mediabas — kör verktyg/satt-mediabas.py först")
+
+
 def satt_enstaka(s):
     """Byt ut avsnittet, eller lägg in det efter liveinspelningarna första gången."""
-    m = re.search(r'src="(.*?)/ljud/', s)
-    if not m:
-        return s
-    nytt = bygg_enstaka(m.group(1))
+    nytt = bygg_enstaka(mediabas(s))
     if ENSTAKA_START in s:
         i = s.index(ENSTAKA_START)
         j = s.index(ENSTAKA_SLUT) + len(ENSTAKA_SLUT)

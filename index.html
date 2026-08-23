@@ -68,24 +68,22 @@
         <a class="cta" href="/kontakt.html">Boka trion</a>
       </div>
       <figure class="hero-figure">
-        <picture>
-          <source type="image/webp"
-                  srcset="/media/bild/agatrion-tranas-2026-small.webp 900w, /media/bild/agatrion-tranas-2026.webp 1800w"
-                  sizes="(min-width: 56rem) 55vw, 100vw">
-          <img src="/media/bild/agatrion-tranas-2026.jpg"
-             srcset="/media/bild/agatrion-tranas-2026-small.jpg 900w, /media/bild/agatrion-tranas-2026.jpg 1800w"
-             sizes="(min-width: 56rem) 55vw, 100vw"
-             width="1800" height="1344"
-             alt="AGA-trion spelar: Andreas Josephson vid cellon, Gösta Nylund vid flygeln och Anna Ighe Ramqvist med violinen, i en ljus sal med trägolv."
-             fetchpriority="high">
-        </picture>
-        <figcaption>Tranås, mars 2026.</figcaption>
+        <video controls preload="none" playsinline
+               poster="/media/bild/lillkyrkan-2021-sang-till-lotta.webp"
+               width="640" height="360">
+          <source src="https://agatrion-media.objects.dc-fbg1.glesys.net/video/lillkyrkan-2021-sang-till-lotta.mp4" type="video/mp4">
+          Din webbläsare kan inte spela upp videon.
+          <a href="https://agatrion-media.objects.dc-fbg1.glesys.net/video/lillkyrkan-2021-sang-till-lotta.mp4">Öppna filen direkt</a>.
+        </video>
+        <figcaption>Jan Sandströms <i>Sång till Lotta</i> i Gösta Nylunds arrangemang —
+        Lillkyrkan i Motala, juli 2021. <a href="/lyssna.html">Fler inspelningar</a></figcaption>
       </figure>
     </div>
   </section>
 
   <section class="section">
-    <div class="wrap prose">
+    <div class="wrap tva-kolumner">
+      <div class="prose">
       <h2>Om trion</h2>
       <p>AGA-trion har spelat tillsammans sedan 2009 — sjutton år av kammarmusik i kyrkor, herrgårdar,
       museer och samlingssalar, mest i Östergötland och grannlandskapen men ibland längre bort än så.
@@ -98,30 +96,31 @@
       <p>Vi spelar hela konsertprogram, kortare lunchkonserter och musik vid gudstjänster och
       högtider. <a href="/repertoar.html">Se repertoaren</a> eller
       <a href="/lyssna.html">lyssna på liveinspelningar</a>.</p>
+      </div>
+      <figure class="foto">
+        <picture>
+          <source type="image/webp" srcset="/media/bild/agatrion-bjarka-saby.webp">
+          <img src="/media/bild/agatrion-bjarka-saby.jpg" width="1400" height="821" loading="lazy"
+               alt="Trion spelar i salongen på Nya Slottet Bjärka-Säby: Gösta Nylund vid flygeln, Anna Ighe Ramqvist med violinen och Andreas Josephson vid cellon.">
+        </picture>
+        <figcaption>Nya Slottet Bjärka-Säby.</figcaption>
+      </figure>
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
       <h2>Musikerna</h2>
-      <figure class="foto-liten">
-        <picture>
-          <source type="image/webp" srcset="/media/bild/agatrion-vreta-2021.webp">
-          <img src="/media/bild/agatrion-vreta-2021.jpg" width="337" height="322" loading="lazy"
-             alt="Gösta Nylund, Anna Ighe Ramqvist och Andreas Josephson står med violin och cello i Vreta klosters kyrka.">
-        </picture>
-        <figcaption>Vreta klosters kyrka, september 2021.</figcaption>
-      </figure>
-      <div class="repertoire">
+            <div class="repertoire">
         <section>
-          <h3>Anna Ighe Ramqvist <span class="years">violin</span></h3>
+          <h3 class="musiker"><span class="anfang">A</span>nna Ighe Ramqvist <span class="years">violin</span></h3>
           <p class="section-lead">Anna kommer från Motala och utbildade sig först till musiker —
           Musikkonservatoriet i Falun och därefter Kungliga Musikhögskolan — innan hon läste till
           läkare. I dag arbetar hon som läkare i Region Östergötland, och har spelat violin i
           trion sedan starten.</p>
         </section>
         <section>
-          <h3>Gösta Nylund <span class="years">piano</span></h3>
+          <h3 class="musiker"><span class="anfang">G</span>östa Nylund <span class="years">piano</span></h3>
           <!-- FYLL I: låt Gösta läsa igenom. Utbildningen är hans egen uppgift i Linköpings
                stifts vikarietorg för kyrkomusiker, och Kungliga Musikhögskolan står på hans
                Facebook-profil; resten är hämtat ur hans mejl och behöver bekräftas. -->
@@ -132,7 +131,7 @@
           hans.</p>
         </section>
         <section>
-          <h3>Andreas Josephson <span class="years">cello</span></h3>
+          <h3 class="musiker"><span class="anfang">A</span>ndreas Josephson <span class="years">cello</span></h3>
           <p class="section-lead">Andreas är ursprungligen från Norrköping och bor numera i
           Motala. Han har examen i kammarmusik vid Mälardalens högskola, där han studerade för
           Ola Karlsson, och medverkar regelbundet som cellist i mindre ensembler och orkestrar

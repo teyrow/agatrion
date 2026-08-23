@@ -94,8 +94,31 @@ h1 + h2 { margin-top: 2rem; }
 }
 .hero-text p.lead { font-size: 1.2rem; color: var(--muted); margin: 0 0 1.5rem; text-wrap: balance; }
 .hero-figure { margin: 0; }
-.hero-figure img { border-radius: 3px; box-shadow: var(--shadow); }
+.hero-figure img,
+.hero-figure video { width: 100%; height: auto; border-radius: 3px; box-shadow: var(--shadow); }
+.hero-figure video { background: #000; display: block; }
 .hero-figure figcaption { font-size: .85rem; color: var(--muted); margin-top: .6rem; }
+
+/* Anfang: A, G och A ur trions namn. Floaten gör att både namnet och
+   biografin under löper runt bokstaven. */
+.repertoire section { display: flow-root; }
+.musiker { margin-bottom: .2rem; }
+.anfang {
+  float: left;
+  font-family: var(--serif);
+  font-size: 4.6em;
+  line-height: .72;
+  margin: .04em .12em -.08em 0;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+.tva-kolumner { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
+@media (min-width: 56rem) { .tva-kolumner { grid-template-columns: 1fr 1fr; } }
+.foto { margin: 0; }
+.foto img { border-radius: 3px; box-shadow: var(--shadow); }
+.foto figcaption { font-size: .85rem; color: var(--muted); margin-top: .6rem; }
 
 .foto-liten { margin: 0 0 2rem; max-width: 337px; }
 .foto-liten img { border-radius: 3px; box-shadow: var(--shadow); }

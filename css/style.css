@@ -106,12 +106,19 @@ h1 + h2 { margin-top: 2rem; }
 .anfang {
   float: left;
   font-family: var(--serif);
-  font-size: 4.6em;
-  line-height: .72;
-  margin: .04em .12em -.08em 0;
-  color: var(--accent);
+  font-size: 3.1em;
+  line-height: 1;
   font-weight: 600;
-  letter-spacing: -.02em;
+  letter-spacing: 0;
+  /* omvända färger mot resten av sidan */
+  color: var(--bg);
+  background: var(--accent);
+  display: inline-block;
+  min-width: 1.25em;
+  text-align: center;
+  padding: .12em .1em .08em;
+  margin: .06em .22em .04em 0;
+  border-radius: 3px;
 }
 
 .tva-kolumner { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }

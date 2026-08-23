@@ -293,9 +293,9 @@ HUVUD = '''<!DOCTYPE html>
     <nav class="site-nav" aria-label="Huvudmeny">
       <ul>
         <li><a href="/">Start</a></li>
+        <li><a href="/lyssna.html">Lyssna</a></li>
         <li><a href="/konserter.html">Konserter</a></li>
         <li><a href="/repertoar.html">Repertoar</a></li>
-        <li><a href="/lyssna.html">Lyssna</a></li>
         <li><a href="/kontakt.html">Kontakt</a></li>
       </ul>
     </nav>

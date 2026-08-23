@@ -54,14 +54,6 @@ def spar_i(block):
 OKAND = "FYLL I"
 
 
-def valt_ankare(fil):
-    """id:t om den här inspelningen är den repertoarsidan ska länka till."""
-    for nyckel, vald in verk.VAL.items():
-        if vald == fil:
-            return verk.ankare(nyckel)
-    return None
-
-
 def rad(spar, visa_verk, indrag):
     u = verk.uppgift(spar["fil"])
     if not u:
@@ -80,7 +72,7 @@ def rad(spar, visa_verk, indrag):
     if visa_verk:
         delar.append('<span class="composer">%s</span>' % html.escape(tonsattare))
     i = " " * indrag
-    ank = valt_ankare(spar["fil"])
+    ank = verk.ankare_for(spar["fil"])
     rader = ['%s<li%s>' % (i, ' id="%s"' % ank if ank else "")]
     if saker == "gissning":
         rader.append("%s  <!-- FYLL I: vilket verk är det h\u00e4r? Bekr\u00e4fta genom att "
@@ -129,37 +121,54 @@ ENSTAKA_SLUT = "  <!-- enstaka:slut -->"
 
 
 def bygg_enstaka(bas):
-    """Avsnittet med de utvalda inspelningar som inte finns på lyssnasidan ändå."""
+    """Avsnittet med valda inspelningar ur konserter som inte ligger uppe i sin helhet."""
     poster = []
-    for nyckel, fil in verk.VAL.items():
+    for fil in verk.VAL:
         konsert = fil.split("/")[0]
         if verk.KONSERTER[konsert][2] == "lyssna":
             continue
-        tonsattare, titel, sats, _ = verk.uppgift(fil)
-        poster.append((tonsattare, titel, sats, nyckel, fil, konsert))
+        vid, sats, _ = verk.SPAR[fil]
+        poster.append((vid, konsert, sats, fil))
     if not poster:
         return ""
-    poster.sort(key=lambda p: (p[0].split()[-1], p[1], p[2]))
+    grupper = {}
+    for vid, konsert, sats, fil in poster:
+        grupper.setdefault((vid, konsert), []).append((sats, fil))
+
+    def sortnyckel(nyckel):
+        vid, konsert = nyckel
+        v = verk.VERK[vid]
+        return (v["tonsattare"].split()[-1], v["titel"], konsert)
+
     ut = [ENSTAKA_START,
           '  <section class="section" id="enstaka">',
           '    <div class="wrap">',
-          "      <h2>Enstaka stycken</h2>",
-          '      <p class="section-lead prose">Ur konserter vi inte lagt upp i sin helhet.</p>',
-          '      <ol class="tracks">']
-    for tonsattare, titel, sats, nyckel, fil, konsert in poster:
+          "      <h2>Ur andra konserter</h2>",
+          '      <p class="section-lead prose">Enskilda verk ur konserter som inte ligger '
+          "uppe i sin helhet.</p>"]
+    for nyckel in sorted(grupper, key=sortnyckel):
+        vid, konsert = nyckel
+        v = verk.VERK[vid]
         plats, datum, _ = verk.KONSERTER[konsert]
-        namn = html.escape(titel)
-        if sats:
-            namn += ' <span class="movement">%s</span>' % html.escape(sats)
-        ut += ['        <li id="%s">' % verk.ankare(nyckel),
-               '          <p class="track-title">%s <span class="composer">%s</span></p>'
-               % (namn, html.escape(tonsattare)),
-               '          <p class="recording-meta">%s, %s</p>'
-               % (html.escape(plats), html.escape(datum)),
-               '          <audio controls preload="none" src="%s/ljud/%s"></audio>'
-               % (bas, html.escape(fil)),
-               "        </li>"]
-    ut += ["      </ol>", "    </div>", "  </section>", ENSTAKA_SLUT]
+        ut += ['      <article class="recording">',
+               '        <p class="recording-meta">%s, %s</p>' % (html.escape(plats),
+                                                                html.escape(datum)),
+               "        <h3>%s%s</h3>"
+               % (html.escape(v["tonsattare"]),
+                  ' <span class="years">%s</span>' % html.escape(v["titel"])
+                  if v["titel"] != OKAND else ""),
+               '        <ol class="tracks">']
+        for sats, fil in sorted(grupper[nyckel]):
+            _, _, satstext, _ = verk.uppgift(fil)
+            ank = verk.ankare_for(fil)
+            ut.append('          <li%s>' % (' id="%s"' % ank if ank else ""))
+            if satstext:      # annars står verket redan i mellanrubriken ovanför
+                ut.append('            <p class="track-title">%s</p>' % html.escape(satstext))
+            ut += ['            <audio controls preload="none" src="%s/ljud/%s"></audio>'
+                   % (bas, html.escape(fil)),
+                   "          </li>"]
+        ut += ["        </ol>", "      </article>"]
+    ut += ["    </div>", "  </section>", ENSTAKA_SLUT]
     return "\n".join(ut)
 
 
@@ -183,6 +192,11 @@ def satt_enstaka(s):
 def skriv_om(sidnamn, grupperat, test):
     bana = os.path.join(ROT, sidnamn)
     s = original = open(bana, encoding="utf-8").read()
+    # avsnittet byggs om från grunden längre ner, så lyft undan det medan
+    # artikelloopen går — annars skulle den försöka skriva om det också
+    if ENSTAKA_START in s:
+        i, j = s.index(ENSTAKA_START), s.index(ENSTAKA_SLUT) + len(ENSTAKA_SLUT)
+        s = s[:i] + ENSTAKA_START + ENSTAKA_SLUT + s[j:]
     ändrade = 0
     for artikel in re.findall(r'<article class="recording".*?</article>', s, re.S):
         spar = spar_i(artikel)

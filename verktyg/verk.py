@@ -215,26 +215,63 @@ KONSERTER = {
 
 
 # ------------------------------------------------------------------- urvalet
-# Vilken inspelning ett verk ska länkas till från repertoarsidan. Nyckeln är
-# "verk:sats" — samma sträng som rullgardinerna på urvalssidan använder.
-# Ligger inspelningen inte på lyssnasidan hamnar den under "Enstaka stycken"
-# där, så att repertoarlänkarna aldrig pekar in i det olänkade arkivet.
-VAL = {
-    "schubert-d898:2": "tranas-2026/01-franz-schubert-schubert.mp3",
-    "mendelssohn-op49:2": "tranas-2026/02-felix-mendelssohn-mendelssohn.mp3",
-    "schindler:0": "tranas-2026/08-john-williams-tema-ur-schindler-s-list.mp3",
-    "bridge-romance:0":
-        "bjarka-saby-2022/01-romance-ur-3-miniatyrer-for-pianotrio-av-frank-bridge.mp3",
-    "koch-variationer:0":
-        "bjarka-saby-2022/02-sju-variationer-over-jag-vet-en-dejlig-rosa-av-erland-von-ko.mp3",
-    "gliere-op39:1": "landeryd-2022/03-prelude.mp3",
-    "gliere-op39:3": "landeryd-2022/04-cradle-song.mp3",
-}
+# De inspelningar som ska ligga på lyssnasidan. Ligger konserten inte där i sin
+# helhet hamnar spåret under "Ur andra konserter", så att repertoarsidan aldrig
+# behöver länka in i det olänkade arkivet.
+#
+# Repertoarsidan får en lyssna-länk för de verk som har precis ett valt spår.
+# Har ett verk flera, står de kvar på lyssnasidan men utan länk — då är det inte
+# avgjort vilken inspelning som ska vara verkets exempel.
+VAL = [
+    "tranas-2026/01-franz-schubert-schubert.mp3",
+    "tranas-2026/02-felix-mendelssohn-mendelssohn.mp3",
+    "tranas-2026/08-john-williams-tema-ur-schindler-s-list.mp3",
+    "brannestad-2024/01-clara-schumann-allegro-moderato.mp3",
+    "brannestad-2024/02-clara-schumann-scherzo-och-trio.mp3",
+    "brannestad-2024/03-clara-schumann-andante.mp3",
+    "brannestad-2024/04-clara-schumann-allegretto.mp3",
+    "brannestad-2024/05-amanda-maier-rontgen-allegro.mp3",
+    "brannestad-2024/06-amanda-maier-rontgen-scherzo.mp3",
+    "brannestad-2024/07-amanda-maier-rontgen-andante.mp3",
+    "brannestad-2024/08-amanda-maier-rontgen-finale-allegro-con-fuoco.mp3",
+    "skanninge-2024/01-sehr-lebhaft.mp3",
+    "skanninge-2024/02-mit-innigem-ausdruck-lebhaft.mp3",
+    "skanninge-2024/03-in-massiger-bewegung.mp3",
+    "skanninge-2024/04-nicht-zu-rasch.mp3",
+    "ekeby-2023/07-chaminade.mp3",
+    "rassnas-2023/01-joseph-haydn-pianotrio-i-g-dur.mp3",
+    "rassnas-2023/03-astor-piazzolla-oblivion.mp3",
+    "rassnas-2023/04-jan-sandstrom-sang-till-lotta.mp3",
+    "bjarka-saby-2022/01-romance-ur-3-miniatyrer-for-pianotrio-av-frank-bridge.mp3",
+    "bjarka-saby-2022/02-sju-variationer-over-jag-vet-en-dejlig-rosa-av-erland-von-ko.mp3",
+    "landeryd-2022/03-prelude.mp3",
+    "landeryd-2022/04-cradle-song.mp3",
+]
+
+
+def valda_per_verk():
+    """"verk:sats" -> de valda filerna för det verket, i VAL-ordning."""
+    ut = {}
+    for fil in VAL:
+        v, sats, _ = SPAR[fil]
+        ut.setdefault("%s:%d" % (v, sats), []).append(fil)
+    return ut
 
 
 def ankare(nyckel):
     """"gliere-op39:3" -> "v-gliere-op39-3", id:t repertoarsidan länkar till."""
     return "v-" + nyckel.replace(":", "-")
+
+
+def ankare_for(fil):
+    """id:t som ska sitta på spåret, eller None.
+
+    Bara det som är entydigt får ett id: har två inspelningar av samma sats
+    valts vet vi inte vilken som är verkets exempel, och då sätts inget."""
+    for nyckel, filer in valda_per_verk().items():
+        if len(filer) == 1 and filer[0] == fil:
+            return ankare(nyckel)
+    return None
 
 
 def uppgift(fil):

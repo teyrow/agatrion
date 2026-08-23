@@ -111,14 +111,12 @@ Logotypen, färgerna och anfangen är dokumenterade på `docs/profil/` — en ol
 inte tar: obalanserad HTML, dubbla `h1`, rubriknivåer som hoppar, meny som glidit isär
 mellan sidorna, `aria-current` på fel länk, interna länkar och ankare som pekar i tomma
 luften, `<audio>` utan `preload="none"`, bilder utan `alt` eller mått, kontraster under
-WCAG AA i båda lägena, och sitemap som listar `noindex`-sidor. `--natet` kollar dessutom
+WCAG AA i båda lägena. `--natet` kollar dessutom
 att de externa länkarna svarar. Inga utskrivna rader betyder att allt är i sin ordning.
 
-`docs/sitemap.xml` skrivs av `verktyg/bygg-sitemap.py`, med `lastmod` hämtad ur senaste
-commit för varje sida. `priority` och `changefreq` är medvetet borta — Google slutade läsa
-dem 2023. Nyttan är liten på en sajt där alla fem sidor står i menyn; den finns för att
-`konserter.html` faktiskt uppdateras. Granskningen larmar om ett datum påstår sig vara
-nyare än verkligheten, eller halkat mer än en vecka efter.
+Det finns ingen `sitemap.xml`. Alla fem sidor står i menyn på varenda sida, så en robot
+som hittar startsidan har hittat allt — Google säger själva att sajtkartor är onödiga under
+500 sidor. Lägg inte tillbaka en; den skulle bara bli ännu en fil att hålla i synk.
 
 Kör granskningen innan varje push. Lighthouse körs vid behov:
 

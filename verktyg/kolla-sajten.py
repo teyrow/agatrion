@@ -286,52 +286,6 @@ def kolla_kontraster():
                       % (vad, k))
 
 
-def kolla_sitemap():
-    p = os.path.join(SAJT, "sitemap.xml")
-    if not os.path.exists(p):
-        anmal(fel, "sitemap.xml", "saknas")
-        return
-    d = open(p, encoding="utf-8").read()
-    listade = set(re.findall(r"<loc>https://agatrion\.se/([^<]*)</loc>", d))
-    for sida in PUBLIKA:
-        n = "" if sida == "index.html" else sida
-        if n not in listade:
-            anmal(fel, "sitemap.xml", "saknar %s" % (n or "startsidan"))
-    for sida in OLANKADE:
-        if sida in listade:
-            anmal(fel, "sitemap.xml", "listar %s som är noindex" % sida)
-    for dod in ("priority", "changefreq"):
-        if dod in d:
-            anmal(varning, "sitemap.xml", "%s läses inte av någon sökmotor — ta bort" % dod)
-
-    # Datumen kommer ur senaste commit, så filen är alltid ett steg efter direkt
-    # efter en commit. Det är ofarligt; det som betyder något är om den hunnit
-    # halka så långt att den ljuger. En vecka är gränsen.
-    import datetime
-    import importlib.util
-    spec = importlib.util.spec_from_file_location(
-        "bygg_sitemap", os.path.join(ROT, "verktyg", "bygg-sitemap.py"))
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    angivna = dict(re.findall(
-        r"<loc>https://agatrion\.se/([^<]*)</loc><lastmod>([\d-]+)</lastmod>", d))
-    for sida in PUBLIKA:
-        n = "" if sida == "index.html" else sida
-        if n not in angivna:
-            anmal(fel, "sitemap.xml", "%s saknar lastmod" % (n or "startsidan"))
-            continue
-        star, verklig = angivna[n], m.andrad(sida)
-        if star > verklig:
-            anmal(fel, "sitemap.xml", "%s påstår %s men ändrades %s"
-                  % (n or "startsidan", star, verklig))
-        else:
-            glapp = (datetime.date.fromisoformat(verklig)
-                     - datetime.date.fromisoformat(star)).days
-            if glapp > 7:
-                anmal(varning, "sitemap.xml", "%s är %d dagar efter — kör bygg-sitemap.py"
-                      % (n or "startsidan", glapp))
-
-
 def main():
     a = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -353,7 +307,6 @@ def main():
     kolla_media(sidor)
     kolla_bildfiler()
     kolla_kontraster()
-    kolla_sitemap()
 
     for rad in fel:
         print("FEL      %s" % rad)

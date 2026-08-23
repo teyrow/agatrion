@@ -26,8 +26,10 @@ medvetna priset för att slippa byggsteg. **Ändras navigationen måste alla sex
 uppdateras**, och `aria-current="page"` sitta på rätt länk i varje.
 
 All styling ligger i `docs/css/style.css` (CSS-variabler i `:root`, mörkt läge via
-`prefers-color-scheme`). Inga externa typsnitt, skript eller CDN — sajten gör inga
-tredjepartsanrop alls vid sidladdning, och det ska den fortsätta att inte göra.
+`prefers-color-scheme`). Inga skript eller CDN — sajten gör inga tredjepartsanrop alls
+vid sidladdning, och det ska den fortsätta att inte göra. Det enda typsnitt som laddas är
+`docs/media/typsnitt/aga-anfang.woff2`, 3,5 kB från vår egen domän, och det används bara
+till anfangerna.
 `docs/js/player.js` är de enda tio raderna JavaScript: pausar övriga ljudspelare och laddar
 YouTube-iframen först vid klick.
 
@@ -88,6 +90,20 @@ tills någon lyssnat.
   för Anna och Gösta: bara verk, sats, tonsättare, en spelare och en kommentarsruta.
   Den publiceras med sajten men är `noindex` och länkas inte från menyn, och spelar
   ljudet från objektlagringen så att den fungerar för den som inte har filerna.
+
+## Grafisk profil
+
+Logotypen, färgerna och anfangen är dokumenterade på `docs/profil/` — en olänkad
+`noindex`-sida, som arkivet. Tre saker att inte tappa bort:
+
+- **Logotypens bokstäver är banor, inte text.** `verktyg/bygg-logotyp.py` ritar
+  `docs/media/bild/logotyp.svg`, `logotyp-block.svg` och `docs/favicon.svg` ur konturerna i
+  `verktyg/logotyp/glyfer.json`. Redigera aldrig SVG-filerna för hand — kör om skriptet.
+- **Konturerna kommer ur TeX Gyre Pagella Bold**, en fri Palatino under GUST Font License.
+  Licensen ber om att härledda verk byter namn, och det är därför typsnittsdelmängden heter
+  AGA Anfang. Licenstexten ligger i `docs/media/typsnitt/`.
+- **Färgerna har ett enda original**, `:root` i `style.css`. Profilsidan läser därifrån, så
+  `verktyg/bygg-profil.py` måste köras om när paletten ändras.
 
 ## Publicering
 

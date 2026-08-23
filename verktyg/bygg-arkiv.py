@@ -289,7 +289,7 @@ HUVUD = '''<!DOCTYPE html>
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/">AGA-trion</a>
+    <a class="brand" href="/"><img src="/media/bild/logotyp.svg" alt="AGA-trion" width="181" height="36"></a>
     <nav class="site-nav" aria-label="Huvudmeny">
       <ul>
         <li><a href="/">Start</a></li>
@@ -312,6 +312,15 @@ HUVUD = '''<!DOCTYPE html>
       menyn och inte sökbar — den finns för er egen skull, och för den ni väljer att ge adressen
       till. Ljudet kommer från Apple Music-arkivet, Audacity-projekten och de färdigklippta
       spåren; kvaliteten varierar därefter.</p>
+      <form class="arkivsok" role="search" onsubmit="return false">
+        <label for="arkivsok">Sök bland alla 94 spår</label>
+        <div class="arkivsok-rad">
+          <input type="search" id="arkivsok" autocomplete="off" spellcheck="false"
+                 placeholder="tonsättare, verk, kyrka eller årtal">
+          <button type="button" id="arkivrensa" hidden>Rensa</button>
+        </div>
+        <p id="arkivsvar" class="arkivsvar" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </section>
 
@@ -332,6 +341,7 @@ FOT = '''</main>
 </footer>
 <script src="/js/player.js" defer></script>
 <script src="/js/dela.js" defer></script>
+<script src="/js/arkiv-sok.js" defer></script>
 </body>
 </html>
 '''

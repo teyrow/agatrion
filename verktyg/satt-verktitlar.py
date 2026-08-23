@@ -123,56 +123,43 @@ ENSTAKA_SLUT = "  <!-- enstaka:slut -->"
 
 
 def bygg_enstaka(bas):
-    """Lyssnasidans enda innehållsavsnitt: en inspelning per verk.
+    """Lyssnasidans enda innehållsavsnitt: en rak lista över det som går att höra.
 
-    Urvalet står i verk.VAL. Hela konserter hör hemma i arkivet — den här sidan
-    ska svara på frågan "hur låter det verket", inte "vad spelade de den kvällen".
+    Urvalet står i verk.VAL. Ingen gruppering — varje rad bär allt den behöver:
+    verk, sats, tonsättare, och var och när inspelningen gjordes. Hela konserter
+    hör hemma i arkivet; den här sidan svarar på "hur låter det verket".
     """
-    poster = []
-    for fil in verk.VAL:
-        konsert = fil.split("/")[0]
-        vid, sats, _ = verk.SPAR[fil]
-        poster.append((vid, konsert, sats, fil))
-    if not poster:
+    if not verk.VAL:
         return ""
-    grupper = {}
-    for vid, konsert, sats, fil in poster:
-        grupper.setdefault((vid, konsert), []).append((sats, fil))
 
-    def sortnyckel(nyckel):
-        vid, konsert = nyckel
+    def sortnyckel(fil):
+        vid, sats, _ = verk.SPAR[fil]
         v = verk.VERK[vid]
-        return (v["tonsattare"].split()[-1], v["titel"], konsert)
+        return (v["tonsattare"].split()[-1], v["titel"], sats)
 
     ut = [ENSTAKA_START,
           '  <section class="section" id="inspelningar">',
           '    <div class="wrap">',
           "      <h2>Inspelningar</h2>",
           '      <p class="section-lead prose">Ett verk i taget, i den inspelning vi tycker '
-          "bäst om. Under varje rubrik står var och när den gjordes.</p>"]
-    for nyckel in sorted(grupper, key=sortnyckel):
-        vid, konsert = nyckel
-        v = verk.VERK[vid]
-        plats, datum, _ = verk.KONSERTER[konsert]
-        ut += ['      <article class="recording">',
-               '        <p class="recording-meta">%s, %s</p>' % (html.escape(plats),
-                                                                html.escape(datum)),
-               "        <h3>%s%s</h3>"
-               % (html.escape(v["tonsattare"]),
-                  ' <span class="years">%s</span>' % html.escape(v["titel"])
-                  if v["titel"] != OKAND else ""),
-               '        <ol class="tracks">']
-        for sats, fil in sorted(grupper[nyckel]):
-            _, _, satstext, _ = verk.uppgift(fil)
-            ank = verk.ankare_for(fil)
-            ut.append('          <li%s>' % (' id="%s"' % ank if ank else ""))
-            if satstext:      # annars står verket redan i mellanrubriken ovanför
-                ut.append('            <p class="track-title">%s</p>' % html.escape(satstext))
-            ut += ['            <audio controls preload="none" src="%s/ljud/%s"></audio>'
-                   % (bas, html.escape(fil)),
-                   "          </li>"]
-        ut += ["        </ol>", "      </article>"]
-    ut += ["    </div>", "  </section>", ENSTAKA_SLUT]
+          "bäst om. Under varje rad står var och när den gjordes.</p>",
+          '      <ol class="tracks">']
+    for fil in sorted(verk.VAL, key=sortnyckel):
+        tonsattare, titel, sats, saker = verk.uppgift(fil)
+        plats, datum, _ = verk.KONSERTER[fil.split("/")[0]]
+        namn = html.escape(titel)
+        if sats:
+            namn += ' <span class="movement">%s</span>' % html.escape(sats)
+        ank = verk.ankare_for(fil)
+        ut += ['        <li%s>' % (' id="%s"' % ank if ank else ""),
+               '          <p class="track-title">%s <span class="composer">%s</span></p>'
+               % (namn, html.escape(tonsattare)),
+               '          <p class="recording-meta">%s, %s</p>'
+               % (html.escape(plats), html.escape(datum)),
+               '          <audio controls preload="none" src="%s/ljud/%s"></audio>'
+               % (bas, html.escape(fil)),
+               "        </li>"]
+    ut += ["      </ol>", "    </div>", "  </section>", ENSTAKA_SLUT]
     return "\n".join(ut)
 
 

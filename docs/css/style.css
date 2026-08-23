@@ -211,10 +211,31 @@ h3 .years { font-family: var(--sans); font-size: .8rem; font-weight: 400; color:
 .repertoire li { padding: .3rem 0; border-bottom: 1px solid var(--rule); }
 .repertoire li:last-child { border-bottom: 0; }
 .repertoire .movements { display: block; font-size: .88rem; color: var(--muted); }
-/* länk till den inspelning vi valt som verkets exempel, se verk.VAL */
-.repertoire a.lyssna { font-family: var(--sans); font-size: .8rem; white-space: nowrap;
-  text-decoration: none; border-bottom: 1px solid currentColor; }
+/* Satser och verk som går att lyssna på, se verk.VAL. Länken bär satsnamnet
+   numera, så den ska ärva satsradens storlek och få lov att radbrytas —
+   "Mit innigem Ausdruck – Lebhaft" ryms inte på en rad i en mobil. */
+.repertoire a.lyssna { color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid currentColor; }
+.repertoire a.lyssna:hover { color: var(--fg); }
 .repertoire a.lyssna::before { content: "\25B8\00A0"; border: 0; }
+/* arkivets sökruta — filtrerar sidan medan man skriver */
+.arkivsok { margin-top: 1.6rem; max-width: 34rem; }
+.arkivsok label { display: block; font-family: var(--sans); font-size: .78rem;
+  text-transform: uppercase; letter-spacing: .06em; color: var(--muted);
+  margin-bottom: .35rem; }
+.arkivsok-rad { display: flex; gap: .5rem; }
+.arkivsok input { flex: 1 1 auto; min-width: 0; padding: .55rem .75rem; font: inherit;
+  color: var(--fg); background: var(--bg); border: 1px solid var(--rule); border-radius: 4px; }
+.arkivsok input:focus { outline: 2px solid var(--accent); outline-offset: 1px;
+  border-color: transparent; }
+.arkivsok button { padding: .55rem .9rem; font-family: var(--sans); font-size: .9rem;
+  color: var(--accent); background: var(--bg); border: 1px solid var(--rule);
+  border-radius: 4px; cursor: pointer; }
+.arkivsok button:hover { color: var(--bg); background: var(--accent);
+  border-color: var(--accent); }
+.arkivsvar { margin: .5rem 0 0; font-family: var(--sans); font-size: .88rem;
+  color: var(--muted); min-height: 1.3em; }
+
 /* markera spåret man hoppat till från repertoarsidan */
 .tracks li:target { background: var(--accent-soft, rgba(127,127,127,.12));
   box-shadow: 0 0 0 .6rem var(--accent-soft, rgba(127,127,127,.12)); border-radius: 2px; }

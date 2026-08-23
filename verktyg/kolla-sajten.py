@@ -142,9 +142,23 @@ def kolla_meta(sida, d, s):
 
 
 def kolla_navigation(sidor):
-    """Sidhuvud och sidfot är kopierade — de måste vara identiska."""
-    referens = None
+    """Sidhuvudet är kopierat till varje fil — det måste vara identiskt överallt.
+
+    Hela huvudet jämförs, inte bara menyn: när arkivsidans mall inte hängde med
+    logotypen behöll den textvarumärket, och en kontroll som bara läste <nav>
+    märkte ingenting."""
+    referens = huvudreferens = None
     for sida, d, _ in sidor:
+        huvud = re.search(r'<header class="site-header">.*?</header>', d, re.S)
+        if not huvud:
+            anmal(fel, sida, "saknar sidhuvudet")
+        else:
+            utan = re.sub(r'\s*aria-current="page"', "", huvud.group(0))
+            if huvudreferens is None:
+                huvudreferens = (sida, utan)
+            elif utan != huvudreferens[1]:
+                anmal(fel, sida, "sidhuvudet skiljer sig från det i %s" % huvudreferens[0])
+
         m = re.search(r'<nav class="site-nav".*?</nav>', d, re.S)
         if not m:
             anmal(fel, sida, "saknar huvudmenyn")

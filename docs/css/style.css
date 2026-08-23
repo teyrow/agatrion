@@ -133,6 +133,16 @@ h1 + h2 { margin-top: 2rem; }
 
 .members { list-style: none; margin: 0 0 1.75rem; padding: 0; font-family: var(--serif); font-size: 1.15rem; }
 .members li { padding: .15rem 0; }
+/* samma omvända anfang som under Musikerna, men i radhöjd — namn och instrument
+   ryms på en rad, så bokstaven ska inte flyta utan sitta med i texten */
+.anfang.liten {
+  float: none;
+  font-size: 1.3em;
+  min-width: 1.15em;
+  padding: .05em .08em .02em;
+  margin: 0 .12em 0 0;
+  vertical-align: -.08em;
+}
 .members .instrument { font-family: var(--sans); font-size: .9rem; color: var(--muted); letter-spacing: .04em; text-transform: lowercase; }
 
 /* --- Sektioner --- */

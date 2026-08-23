@@ -24,7 +24,8 @@ import urllib.request
 ROT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SAJT = os.path.join(ROT, "docs")
 PUBLIKA = ["index.html", "konserter.html", "repertoar.html", "lyssna.html", "kontakt.html"]
-OLANKADE = ["arkiv.html", "404.html", "profil/index.html", "granska/index.html"]
+OLANKADE = ["arkiv.html", "404.html", "profil/index.html", "granska/index.html",
+            "prov/anfang.html"]
 EGEN_DOMAN = ("agatrion.se", "agatrion-media.objects.dc-fbg1.glesys.net")
 
 fel = []

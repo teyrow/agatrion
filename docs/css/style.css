@@ -141,19 +141,18 @@ h1 + h2 { margin-top: 2rem; }
 }
 
 /* Musikerna står under varandra i en läsbar spaltbredd, så att anfangerna
-   linjerar i en pelare och stavar A G A nedåt. Bokstaven flyter i texten;
-   storleken sätts i rem så att den inte påverkas av rubrikens teckengrad, och
-   trappas ner på smala skärmar där en femradig anfang skulle äta halva raden. */
+   linjerar i en pelare och stavar A G A nedåt. Bokstaven flyter i texten, och
+   storleken sätts i rem så att den inte påverkas av rubrikens teckengrad. */
 .musikerna section { display: flow-root; max-width: 44rem;
   padding: 1.6rem 0; border-top: 1px solid var(--rule); }
 .musikerna section:first-child { border-top: 0; padding-top: .4rem; }
+/* En enda storlek, samma i alla bredder. Provsidan /prov/anfang.html visar
+   alternativen; 3,1 rem vann därför att bokstaven då spänner rubriken plus två
+   rader och släpper texten fri igen — de större varianterna tog över stycket.
+   Fast värde och ingen clamp: radhöjden är fast (1,0625 rem × 1,65), och en
+   storlek som glider med fönsterbredden slutar mitt i en rad nästan jämt. */
+.musikerna { --anfang: 3.1rem; }
 .musikerna .anfang { font-size: var(--anfang); }
-/* Tre steg i stället för en flytande clamp: bokstaven ska sluta vid en radkant,
-   och radhöjden är fast (1,0625 rem × 1,65). En storlek som glider med
-   fönsterbredden hamnar mitt i en rad nästan hela tiden. */
-.musikerna { --anfang: 5.2rem; }                                  /* rubrik + fyra rader */
-@media (max-width: 46rem) { .musikerna { --anfang: 4.4rem; } }    /* rubrik + tre rader */
-@media (max-width: 34rem) { .musikerna { --anfang: 3.1rem; } }    /* rubrik + två rader */
 
 .tva-kolumner { display: grid; gap: clamp(1.75rem, 4vw, 3rem); align-items: start; }
 @media (min-width: 56rem) { .tva-kolumner { grid-template-columns: 1fr 1fr; } }
